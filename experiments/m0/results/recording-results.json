@@ -1,0 +1,82 @@
+[
+  {
+    "input": "01-AchGottundHerr-violin.wav",
+    "seconds": 0.44,
+    "expected": 34,
+    "suggested": 43,
+    "pitch_onset_hits": 31,
+    "offset_also_correct": 23
+  },
+  {
+    "input": "01-AchGottundHerr.wav",
+    "seconds": 0.15,
+    "expected": 34,
+    "suggested": 98,
+    "pitch_onset_hits": 25,
+    "offset_also_correct": 17
+  },
+  {
+    "input": "02-AchLiebenChristen-violin.wav",
+    "seconds": 0.21,
+    "expected": 71,
+    "suggested": 85,
+    "pitch_onset_hits": 69,
+    "offset_also_correct": 61
+  },
+  {
+    "input": "02-AchLiebenChristen.wav",
+    "seconds": 0.23,
+    "expected": 71,
+    "suggested": 190,
+    "pitch_onset_hits": 65,
+    "offset_also_correct": 49
+  },
+  {
+    "input": "03-ChristederdubistTagundLicht-violin.wav",
+    "seconds": 0.15,
+    "expected": 37,
+    "suggested": 51,
+    "pitch_onset_hits": 35,
+    "offset_also_correct": 21
+  },
+  {
+    "input": "03-ChristederdubistTagundLicht.wav",
+    "seconds": 0.16,
+    "expected": 37,
+    "suggested": 130,
+    "pitch_onset_hits": 26,
+    "offset_also_correct": 10
+  },
+  {
+    "input": "04-ChristeDuBeistand-violin.wav",
+    "seconds": 0.25,
+    "expected": 45,
+    "suggested": 75,
+    "pitch_onset_hits": 44,
+    "offset_also_correct": 29
+  },
+  {
+    "input": "04-ChristeDuBeistand.wav",
+    "seconds": 0.23,
+    "expected": 45,
+    "suggested": 190,
+    "pitch_onset_hits": 36,
+    "offset_also_correct": 9
+  },
+  {
+    "input": "05-DieNacht-violin.wav",
+    "seconds": 0.18,
+    "expected": 37,
+    "suggested": 61,
+    "pitch_onset_hits": 36,
+    "offset_also_correct": 21
+  },
+  {
+    "input": "05-DieNacht.wav",
+    "seconds": 0.2,
+    "expected": 37,
+    "suggested": 136,
+    "pitch_onset_hits": 32,
+    "offset_also_correct": 16
+  }
+]

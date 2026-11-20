@@ -1,0 +1,66 @@
+[
+  {
+    "input": "crossings-solo.wav",
+    "expected": 7,
+    "suggested": 11,
+    "pitch_onset_hits": 6,
+    "duration_also_correct": 4,
+    "seconds": 4.24
+  },
+  {
+    "input": "crossings-mix.wav",
+    "expected": 7,
+    "suggested": 13,
+    "pitch_onset_hits": 5,
+    "duration_also_correct": 2,
+    "seconds": 0.04
+  },
+  {
+    "input": "placement-solo.wav",
+    "expected": 7,
+    "suggested": 7,
+    "pitch_onset_hits": 7,
+    "duration_also_correct": 7,
+    "seconds": 0.04
+  },
+  {
+    "input": "placement-mix.wav",
+    "expected": 7,
+    "suggested": 12,
+    "pitch_onset_hits": 7,
+    "duration_also_correct": 5,
+    "seconds": 0.04
+  },
+  {
+    "input": "rhythm-solo.wav",
+    "expected": 7,
+    "suggested": 8,
+    "pitch_onset_hits": 7,
+    "duration_also_correct": 6,
+    "seconds": 0.04
+  },
+  {
+    "input": "rhythm-mix.wav",
+    "expected": 7,
+    "suggested": 11,
+    "pitch_onset_hits": 7,
+    "duration_also_correct": 5,
+    "seconds": 0.04
+  },
+  {
+    "input": "low-solo.wav",
+    "expected": 7,
+    "suggested": 9,
+    "pitch_onset_hits": 5,
+    "duration_also_correct": 5,
+    "seconds": 0.03
+  },
+  {
+    "input": "low-mix.wav",
+    "expected": 7,
+    "suggested": 9,
+    "pitch_onset_hits": 5,
+    "duration_also_correct": 5,
+    "seconds": 0.04
+  }
+]

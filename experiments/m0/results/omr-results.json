@@ -1,0 +1,110 @@
+[
+  {
+    "input": "crossings.pdf",
+    "seconds": 6.45,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  },
+  {
+    "input": "crossings-scan.png",
+    "seconds": 2.83,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  },
+  {
+    "input": "crossings-skew.jpg",
+    "seconds": 2.92,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  },
+  {
+    "input": "placement.pdf",
+    "seconds": 6.7,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  },
+  {
+    "input": "placement-scan.png",
+    "seconds": 3.18,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  },
+  {
+    "input": "placement-skew.jpg",
+    "seconds": 2.84,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  },
+  {
+    "input": "rhythm.pdf",
+    "seconds": 5.35,
+    "exit": 0,
+    "expected": 8,
+    "actual": 8,
+    "exact": true,
+    "matched": 8
+  },
+  {
+    "input": "rhythm-scan.png",
+    "seconds": 2.74,
+    "exit": 0,
+    "expected": 8,
+    "actual": 8,
+    "exact": true,
+    "matched": 8
+  },
+  {
+    "input": "rhythm-skew.jpg",
+    "seconds": 4.28,
+    "exit": 0,
+    "expected": 8,
+    "actual": 8,
+    "exact": true,
+    "matched": 8
+  },
+  {
+    "input": "low.pdf",
+    "seconds": 5.13,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  },
+  {
+    "input": "low-scan.png",
+    "seconds": 3.34,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  },
+  {
+    "input": "low-skew.jpg",
+    "seconds": 4.87,
+    "exit": 0,
+    "expected": 7,
+    "actual": 7,
+    "exact": true,
+    "matched": 7
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "file": "01-AchGottundHerr-violin.wav",
+    "bpm": 108,
+    "reference": 34,
+    "suggested": 42,
+    "matched": 32
+  },
+  {
+    "file": "01-AchGottundHerr.wav",
+    "bpm": 99,
+    "reference": 34,
+    "suggested": 57,
+    "matched": 23
+  },
+  {
+    "file": "02-AchLiebenChristen-violin.wav",
+    "bpm": 103,
+    "reference": 71,
+    "suggested": 82,
+    "matched": 67
+  },
+  {
+    "file": "02-AchLiebenChristen.wav",
+    "bpm": 108,
+    "reference": 71,
+    "suggested": 117,
+    "matched": 50
+  },
+  {
+    "file": "03-ChristederdubistTagundLicht-violin.wav",
+    "bpm": 99,
+    "reference": 37,
+    "suggested": 49,
+    "matched": 30
+  },
+  {
+    "file": "03-ChristederdubistTagundLicht.wav",
+    "bpm": 96,
+    "reference": 37,
+    "suggested": 79,
+    "matched": 27
+  },
+  {
+    "file": "04-ChristeDuBeistand-violin.wav",
+    "bpm": 108,
+    "reference": 45,
+    "suggested": 72,
+    "matched": 37
+  },
+  {
+    "file": "04-ChristeDuBeistand.wav",
+    "bpm": 92,
+    "reference": 45,
+    "suggested": 113,
+    "matched": 26
+  },
+  {
+    "file": "05-DieNacht-violin.wav",
+    "bpm": 99,
+    "reference": 37,
+    "suggested": 56,
+    "matched": 32
+  },
+  {
+    "file": "05-DieNacht.wav",
+    "bpm": 103,
+    "reference": 37,
+    "suggested": 86,
+    "matched": 17
+  }
+]

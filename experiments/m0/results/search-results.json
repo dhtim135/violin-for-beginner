@@ -1,0 +1,51 @@
+{
+  "catalogue_size": 1462,
+  "results": [
+    {
+      "query": "Just for Today",
+      "matches": [
+        "scores/Abbott,_Jane_Bingham/_/Just_for_Today/lc6583477.mxl"
+      ],
+      "source": "https://raw.githubusercontent.com/OpenScore/Lieder/38c5db510224d9facdc4b08d741fc788cfb58ea8/scores/Abbott%2C_Jane_Bingham/_/Just_for_Today/lc6583477.mxl",
+      "credit": "OpenScore Lieder (CC0)",
+      "parts": {
+        "P1": "Voice",
+        "P2": "Piano"
+      },
+      "notes": 587,
+      "measures": 82
+    },
+    {
+      "query": "Crazy Jane",
+      "matches": [
+        "scores/Abrams,_Harriett/_/Crazy_Jane/lc6583907.mxl"
+      ],
+      "source": "https://raw.githubusercontent.com/OpenScore/Lieder/38c5db510224d9facdc4b08d741fc788cfb58ea8/scores/Abrams%2C_Harriett/_/Crazy_Jane/lc6583907.mxl",
+      "credit": "OpenScore Lieder (CC0)",
+      "parts": {
+        "P1": "Voice",
+        "P2": "Piano\n(or Harp)"
+      },
+      "notes": 1140,
+      "measures": 138
+    },
+    {
+      "query": "Die Forelle",
+      "matches": [
+        "scores/Schubert,_Franz/_/Die_Forelle,_Op.32,_D550d/lc6900961.mxl"
+      ],
+      "source": "https://raw.githubusercontent.com/OpenScore/Lieder/38c5db510224d9facdc4b08d741fc788cfb58ea8/scores/Schubert%2C_Franz/_/Die_Forelle%2C_Op.32%2C_D550d/lc6900961.mxl",
+      "credit": "OpenScore Lieder (CC0)",
+      "parts": {
+        "P1": "Singstimme\nVoice",
+        "P2": "Pianoforte"
+      },
+      "notes": 975,
+      "measures": 106
+    },
+    {
+      "query": "zzzz-no-such-title",
+      "matches": []
+    }
+  ]
+}
