@@ -43,7 +43,7 @@ not a promise of perfect reconstruction of every instrument in a recording.
   placement hints such as low/high finger placement.
 - A concise legend explaining the notation.
 - Demonstration playback with synchronized highlighting.
-- Adjustable playback speed, count-in, and selected-measure looping.
+- Playback can pause and resume at the same position. Reset returns to the start of the piece or selected loop. Speed, count-in and loop bars are adjustable.
 - Save and reopen the annotated score.
 - Export a clearly laid-out annotated PDF with its legend for printing.
 - Clear identification of the source, selected part/segment, simplification,
@@ -85,16 +85,15 @@ The result page should make the score the primary content and show upcoming
 notes, not only the currently sounding note. Avoid prerequisite music-theory
 questionnaires before the first useful result.
 
-The piece picker groups related repertoire and sorts by English title within each group. The Pokémon anime openings appear together.
+The piece picker groups related repertoire and sorts by English title within each group.
 
 Each built-in piece displays its original title alongside its Simplified Chinese name in the piece picker, search, saved scores, score heading and printed PDF. Either name can be used for title search.
 
 The score paper and printed PDF include a readable fingering guide for open
 strings, finger numbers and low/high placement. The piece picker identifies
-excerpts by name. Its Super Mario Bros. Main Theme entry opens the complete
-melody of the selected edition, including its repeats. The separate Easy Main Theme condenses the tune into 16 bars using six notes and whole-beat rhythms.
+excerpts by name. Each edition identifies its source and any changes to the melody, key or rhythm.
 
-Longer practice editions of Ode to Joy, the New World Largo and Korobeiniki sit alongside their short starters. Each longer edition identifies the selected theme and source. Stables also links to the requested recording for comparison.
+The public catalogue contains original studies, beginner arrangements of public-domain melodies and documented third-party editions. Each new public score needs a redistribution and adaptation basis for its particular edition. Musicians can import other repertoire locally when they have permission to use it. The application uses PolyForm Noncommercial 1.0.0, including its permission for use by educational institutions. [License](LICENSE)
 
 ## Version consistency
 
@@ -132,7 +131,7 @@ will be set after feasibility experiments. They are not measured guarantees yet.
 
 ## Decisions to revisit after the local feedback build
 
-- Hosted deployment, operating costs and application license.
+- Hosted deployment and operating costs.
 - Search sources and the breadth of the initial searchable repertoire.
 - Audio quality envelope, especially accompanied versus isolated melodies.
 - Default hand-position range and rules for alternative fingerings.

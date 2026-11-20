@@ -11,5 +11,6 @@
   "scripts": {
     "start": "./scripts/start.sh",
     "test": "node --test tests/music.test.js && .venv/bin/python -m unittest discover -s tests && node tests/workflows.mjs"
-  }
+  },
+  "license": "PolyForm-Noncommercial-1.0.0"
 }

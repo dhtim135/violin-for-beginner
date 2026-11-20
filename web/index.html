@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stringbook · Violin scores</title>
+    <link rel="stylesheet" href="$assets/style.css" />
+    <script src="$assets/abcjs.js"></script>
+    <script id="initialScore" type="application/json">$initial_score</script>
+    <script type="module">
+      import("$assets/app.js").catch(() => {
+        document.getElementById("bootError").hidden = false;
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/"><span class="brandmark">♬</span> Stringbook</a
+      ><span class="headerline"></span><button id="library">My scores</button
+      ><button class="primary" id="import">＋ Import music</button>
+    </header>
+    <main>
+      <p id="bootError" role="alert" hidden>
+        Stringbook’s controls could not load.
+        <a href="/">Reload the local app</a>.
+      </p>
+      <noscript>Enable JavaScript to display notation and play a score.</noscript>
+      <section class="heading">
+        <div>
+          <details class="picker" id="pieces">
+            <summary id="switchPiece">Switch piece</summary>
+            <section id="piecePanel" aria-label="Choose a piece">
+              <h3>Starter pieces</h3>
+              <p id="openingPiece" role="status" hidden></p>
+              <form id="starterChoices" method="get" action="/">$starter_choices</form>
+              <div id="savedChoices"></div>
+            </section>
+          </details>
+          <h1 id="title">$title</h1>
+          <div id="subtitle"></div>
+        </div>
+        <div class="actions">
+          <button id="save">Save score</button
+          ><button id="export">Download PDF</button>
+        </div>
+      </section>
+      <section class="transport">
+        <div class="playbackButtons">
+          <button class="play" id="play">▶ Play</button>
+          <button id="resetPlayback" disabled>Reset</button>
+        </div>
+        <label
+          >Speed
+          <select id="speed">
+            <option value=".5">0.5×</option>
+            <option value=".75">0.75×</option>
+            <option value="1" selected>1×</option>
+            <option value="1.25">1.25×</option>
+          </select></label
+        >
+        <details class="picker" id="keys">
+          <summary id="key">Key · $key_label</summary>
+          <section id="keyPanel" aria-label="Choose a key">
+            <h3>Play in a new key</h3>
+            <form class="keyGrid" method="get" action="/">
+              <input type="hidden" name="piece" value="$piece" />
+              $key_choices
+            </form>
+          </section>
+        </details>
+        <label><input type="checkbox" id="count" checked /> Count-in</label
+        ><label><input type="checkbox" id="loop" /> Loop bars</label
+        ><span id="range" hidden
+          ><input
+            aria-label="First bar"
+            id="first"
+            type="number"
+            min="1"
+            value="1" />
+          –
+          <input aria-label="Last bar" id="last" type="number" min="1" /></span
+        ><button id="undo" disabled>Undo edit</button><span id="tempo"></span>
+      </section>
+      <div id="feedback" role="status" aria-live="polite"></div>
+      <div class="workspace" id="workspace">
+        <article class="paper">
+          <div class="paperhead">
+            <span id="barcount"></span
+            ><button id="tools" aria-controls="inspector" aria-expanded="false">
+              Score tools
+            </button>
+          </div>
+          <div id="notation"></div>
+          <div class="legend" aria-label="Violin fingering guide">
+            <span><strong>G · D · A · E</strong> Open strings</span>
+            <span><strong>1–4</strong> Fingers</span>
+            <span><strong>↓</strong> Low finger</span>
+            <span><strong>↑</strong> High finger</span>
+          </div>
+        </article>
+        <aside id="inspector" hidden>
+          <small>FINGERING</small>
+          <h2>On the string</h2>
+          <div class="strings">
+            <span>G</span><span>D</span><span>A</span><span>E</span>
+          </div>
+          <p>
+            A letter names the string. A number tells you which finger to place.
+            For example, D3 means D string, third finger.
+          </p>
+          <div id="selection">Select a note to edit.</div>
+          <form id="edit" hidden>
+            <label>Pitch<select id="pitch"></select></label
+            ><label>Duration<select id="duration"></select></label
+            ><label>String &amp; finger<select id="finger"></select></label
+            ><button class="primary">Apply change</button
+            ><button type="button" id="hear">Hear note</button>
+            <div class="pair">
+              <button type="button" id="insert">Insert after</button
+              ><button type="button" id="remove">Delete</button>
+            </div>
+            <button type="button" id="merge">Merge with next</button>
+          </form>
+          <hr />
+
+          <details id="details">
+            <summary>Score &amp; source</summary>
+            <div id="metadata"></div>
+          </details>
+        </aside>
+      </div>
+    </main>
+    <dialog id="dialog">
+      <div class="dialoghead">
+        <h2 id="dialogtitle"></h2>
+        <button id="close" aria-label="Close">×</button>
+      </div>
+      <div id="content"></div>
+      <p id="dstatus" role="status"></p>
+    </dialog>
+  </body>
+</html>

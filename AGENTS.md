@@ -50,6 +50,9 @@ Use `PRODUCT.md` for agreed scope, `ARCHITECTURE.md` for implemented boundaries,
 - Keep expensive conversion work outside interactive request handling; expose
   meaningful progress, errors, and retries when that pipeline is implemented.
 - Preserve provenance and source-use information for imported/search content.
+  For a public score, document the redistribution and adaptation basis for the
+  composition and the submitted edition in `THIRD_PARTY_NOTICES.md`. Keep
+  local-only editions and recordings outside version control.
 - Do not commit credentials, private uploads, model weights, or generated bulk files.
 - Test meaningful musical cases: accidentals, rests, ties, rhythm, all four strings,
   alternate fingerings, edits, and consistency between playback and export.
@@ -62,4 +65,6 @@ Use `PRODUCT.md` for agreed scope, `ARCHITECTURE.md` for implemented boundaries,
 
 The local P0 feedback build is implemented. Start it with `./scripts/start.sh`
 after setup. Run `npm test` to verify the musical model and real browser routes.
-The production hosting target and application license remain open.
+The production hosting target remains open. First-party material uses PolyForm
+Noncommercial 1.0.0. Preserve upstream terms as documented in
+`THIRD_PARTY_NOTICES.md`.

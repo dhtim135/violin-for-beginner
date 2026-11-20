@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="$assets/style.css" />
+    <script src="$assets/abcjs.js"></script>
+  </head>
+  <body class="printdoc">
+    <h1></h1>
+    <p id="source"></p>
+    <div class="legend" aria-label="Violin fingering guide">
+      <span><strong>G · D · A · E</strong> Open strings</span>
+      <span><strong>1–4</strong> Fingers</span>
+      <span><strong>↓</strong> Low finger</span>
+      <span><strong>↑</strong> High finger</span>
+      <span><strong>Range?</strong> Outside first position</span>
+    </div>
+    <div id="score"></div>
+    <p id="notices"></p>
+    <script type="module">
+      import { renderScore } from "$assets/music.js";
+      import { songTitle } from "$assets/title.js";
+      import { keyLabel } from "$assets/keys.js";
+      window.printScore = (score) => {
+        document.querySelector("h1").replaceChildren(songTitle(score));
+        document.querySelector("#source").textContent = [
+          "Source: " + score.source,
+          score.part,
+          score.key && "Playing in " + keyLabel(score.key),
+          score.bpm + " BPM",
+        ]
+          .filter(Boolean)
+          .join(" · ");
+        document.querySelector("#notices").textContent =
+          score.notices.join(" ");
+        renderScore(score, document.querySelector("#score"), () => {});
+      };
+    </script>
+  </body>
+</html>
