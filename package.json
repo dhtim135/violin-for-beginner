@@ -1,0 +1,15 @@
+{
+  "name": "violin-for-beginner",
+  "dependencies": {
+    "abcjs": "6.7.3"
+  },
+  "devDependencies": {
+    "playwright-core": "1.65.1"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "./scripts/start.sh",
+    "test": "node --test tests/music.test.js && .venv/bin/python -m unittest discover -s tests && node tests/workflows.mjs"
+  }
+}
