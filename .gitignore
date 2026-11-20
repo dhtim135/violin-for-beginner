@@ -1,0 +1,11 @@
+.venv/
+.runtime/
+.data/
+node_modules/
+__pycache__/
+.ruff_cache/
+.DS_Store
+
+# Local score exports. Keep the print sample cited by the M0 findings.
+/output/pdf/*.pdf
+!/output/pdf/four-string-example.pdf
