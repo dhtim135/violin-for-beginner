@@ -153,26 +153,3 @@ def normalize(part):
     if len(marks) > 1:
         notices.add("Using one demonstration tempo throughout.")
     return bars, round(tempo or 90), sorted(notices)
-
-
-def four_strings():
-    bars = [[55, 62, 69, 76], [78, 81, 83], [71, 72, 73, 74], [74, 72, 71]]
-    return dict(
-        title="Four strings",
-        key="G",
-        source="Stringbook · original first-position study",
-        part="Violin",
-        kind="example",
-        bpm=76,
-        notices=[],
-        bars=[
-            dict(
-                meter="4/4",
-                events=[
-                    event(p, 192 if len(ps) == 3 and i == 2 else 96)
-                    for i, p in enumerate(ps)
-                ],
-            )
-            for ps in bars
-        ],
-    )

@@ -20,6 +20,6 @@ Required Notice: Copyright Stringbook contributors
 
 The license expressly permits use by educational institutions regardless of their funding, including tuition. A commercial vendor selling the app or offering a paid hosted service needs separate written permission from the relevant copyright holders. The maintainers can route permission inquiries through the repository. [Permission inquiries](https://github.com/dhtim135/violin-for-beginner/issues)
 
-Third-party software, score editions and recordings have their own terms. The public catalogue includes 31 offline pieces. Personal score imports stay in the user's local library. [Music and dependency notices](THIRD_PARTY_NOTICES.md)
+Third-party software, score editions and recordings have their own terms. The public catalogue includes seven offline pieces. Personal score imports stay in the user's local library. [Music and dependency notices](THIRD_PARTY_NOTICES.md)
 
 Bug reports, fingering corrections and documented score sources are welcome. [Contribution guide](CONTRIBUTING.md)

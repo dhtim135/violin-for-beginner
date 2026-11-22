@@ -72,8 +72,8 @@ class StarterEditions(unittest.TestCase):
 
         with patch.object(starters, "PRIVATE", {}):
             slugs = {row["example"] for row in starters.catalogue()}
-            self.assertIn("ode-to-joy", slugs)
-            self.assertIn("little-bo-peep", slugs)
+            self.assertEqual(slugs, {"starter", "frere-jacques", "row-your-boat", "jingle-bells",
+                                     "baa-baa-black-sheep", "mulberry-bush", "hush-a-by-baby"})
             self.assertTrue({"mario-theme", "botw-stables", "pokemon-tv-theme"}.isdisjoint(slugs))
             with self.assertRaises(KeyError):
                 starters.load("mario-theme")

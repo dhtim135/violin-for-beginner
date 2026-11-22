@@ -18,9 +18,9 @@ The suite needs local Chrome (or CHROME_BIN), Audiveris, FFmpeg, the pinned Pyth
 
 The browser suite generates its own 24-bar study in the temporary local library. It measures gaps, baselines and notehead alignment across all 216 finger labels at 390 px and 1300 px. It checks the grouped picker order with the app module blocked, and checks bilingual titles in the picker, a saved score and a PDF. The model suite verifies the public catalogue independently of any private collection.
 
-The 20 *Baby’s Opera* editions were opened from the piece picker, played and exported individually. Their suggested fingerings cover G, D, A and E across the collection. Catalogue search also resolves the collection name and Chinese title aliases.
+The public catalogue test checks the seven retained titles. All offline editions are checked for matching bilingual titles, measure lengths and first-position range.
 
-The bowing checks cover source up-bows, violin versus piano slurs in MusicXML, tied durations, rests, group edits and scale spelling. The browser joins two notes in *Ode to Joy*, changes and saves a bow direction, reopens the edition, checks playback highlighting and transposition, and inspects the PDF card and mobile viewport.
+The bowing checks cover source up-bows, violin versus piano slurs in MusicXML, tied durations, rests, group edits and scale spelling. The browser joins two notes in *Twinkle, Twinkle, Little Star*, changes and saves a bow direction, reopens the edition, checks playback highlighting and transposition, and inspects the PDF card and mobile viewport.
 
 ## Quality measurements
 

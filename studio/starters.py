@@ -10,13 +10,14 @@ from unicodedata import combining, normalize
 from music21.pitch import Pitch
 
 from . import nursery
-from .score import TPQ, event, example, four_strings
+from .score import TPQ, event, example
 
 # Optional, user-owned practice editions live alongside the local library.
 _data_dir = Path(os.environ.get("VIOLIN_DATA", Path(__file__).resolve().parents[1] / ".data"))
 _private_file = _data_dir / "private-editions.json"
 PRIVATE = json.loads(_private_file.read_text()) if _private_file.is_file() else {}
 
+# Preserve title translations for older saved arrangements as well as current pieces.
 # Display names in Simplified Chinese. Search aliases can include other names
 # for the same tune, transliterations and names in Traditional Chinese.
 CHINESE_TITLES = {
@@ -56,24 +57,6 @@ CHINESE_TITLES = {
 
 # These are Stringbook arrangements; pitches below describe sound, never fingering.
 TUNES = {
-    "pixel-parade": (
-        "Pixel Parade",
-        "Stringbook · original arcade tune",
-        "game video game 游戏 像素",
-        "D",
-        92,
-        "D4:1/2 E4:1/2 F#4 A4 F#4 | G4:1/2 A4:1/2 B4 A4:2 | "
-        "F#4 A4:1/2 B4:1/2 D5 B4 | A4 G4 E4:2 | "
-        "D4:1/2 E4:1/2 F#4 A4 F#4 | G4 B4 D5:2 | B4 A4 G4 E4 | F#4 E4 D4:2",
-    ),
-    "new-world": (
-        "New World Symphony · Largo",
-        "Antonín Dvořák · opening English horn melody",
-        "Going Home 念故乡 新世界",
-        "D",
-        68,
-        "F#4:3/2 A4:1/2 A4:2 | F#4:3/2 E4:1/2 D4:2 | E4:3/2 F#4:1/2 A4:3/2 F#4:1/2 | E4:4",
-    ),
     "row-your-boat": (
         "Row, Row, Row Your Boat",
         "Traditional round · even-beat beginner version",
@@ -83,23 +66,6 @@ TUNES = {
         "G4 G4 G4:3/4 A4:1/4 B4 | B4:3/4 A4:1/4 B4:3/4 C5:1/4 D5:2 | "
         "G5:1/4 G5:1/4 G5:1/2 D5:1/4 D5:1/4 D5:1/2 B4:1/4 B4:1/4 B4:1/2 G4:1/4 G4:1/4 G4:1/2 | D5 C5 B4:1/2 A4:1/2 G4",
     ),
-    "hot-cross-buns": (
-        "Hot Cross Buns",
-        "Traditional",
-        "热十字面包",
-        "D",
-        76,
-        "F#4 E4 D4:2 | F#4 E4 D4:2 | D4:1/2 D4:1/2 D4:1/2 D4:1/2 E4:1/2 E4:1/2 E4:1/2 E4:1/2 | F#4 E4 D4:2",
-    ),
-    "mary": (
-        "Mary Had a Little Lamb",
-        "Traditional",
-        "玛丽有只小羊羔 玛丽的小羊",
-        "D",
-        80,
-        "F#4 E4 D4 E4 | F#4 F#4 F#4:2 | E4 E4 E4:2 | F#4 A4 A4:2 | "
-        "F#4 E4 D4 E4 | F#4 F#4 F#4 F#4 | E4 E4 F#4 E4 | D4:4",
-    ),
     "frere-jacques": (
         "Frère Jacques",
         "Traditional French round",
@@ -108,24 +74,6 @@ TUNES = {
         84,
         "D4 E4 F#4 D4 | D4 E4 F#4 D4 | F#4 G4 A4:2 | F#4 G4 A4:2 | "
         "A4:1/2 B4:1/2 A4:1/2 G4:1/2 F#4 D4 | A4:1/2 B4:1/2 A4:1/2 G4:1/2 F#4 D4 | D4 A3 D4:2 | D4 A3 D4:2",
-    ),
-    "ode-to-joy": (
-        "Ode to Joy",
-        "Ludwig van Beethoven · opening theme",
-        "欢乐颂 歡樂頌",
-        "D",
-        82,
-        "F#4 F#4 G4 A4 | A4 G4 F#4 E4 | D4 D4 E4 F#4 | F#4:3/2 E4:1/2 E4:2 | "
-        "F#4 F#4 G4 A4 | A4 G4 F#4 E4 | D4 D4 E4 F#4 | E4:3/2 D4:1/2 D4:2",
-    ),
-    "london-bridge": (
-        "London Bridge Is Falling Down",
-        "Traditional English melody",
-        "伦敦桥 倫敦橋",
-        "G",
-        84,
-        "D5:3/2 E5:1/2 D5 C5 | B4 C5 D5:2 | A4 B4 C5:2 | B4 C5 D5:2 | "
-        "D5:3/2 E5:1/2 D5 C5 | B4 C5 D5:2 | A4:2 D5:2 | B4 G4:3",
     ),
     "jingle-bells": (
         "Jingle Bells",
@@ -141,14 +89,6 @@ TUNES = {
 }
 
 
-def _section(slug):
-    if slug.startswith(("new-world", "ode-to-joy")):
-        return "Classical"
-    if slug == "pixel-parade":
-        return "Game music"
-    return "Beginner & folk"
-
-
 def catalogue():
     rows = [
         (
@@ -156,12 +96,6 @@ def catalogue():
             "Twinkle, Twinkle, Little Star",
             "Traditional",
             "Twinkle little star 小星星",
-        ),
-        (
-            "strings",
-            "Four strings",
-            "Stringbook · original study",
-            "四根弦 first position",
         ),
     ]
     rows.extend(
@@ -179,7 +113,7 @@ def catalogue():
     )
     for piece in pieces:
         piece["titleZh"] = CHINESE_TITLES[piece["title"]]
-        piece["section"] = _section(piece["example"])
+        piece["section"] = "Beginner & folk"
 
     pieces.extend(entry["row"].copy() for entry in PRIVATE.values())
 
@@ -205,8 +139,6 @@ def _load_score(piece):
         return deepcopy(nursery.score(piece))
     if piece == "starter":
         return example()
-    if piece == "strings":
-        return four_strings()
     title, source, _, key, bpm, melody = TUNES[piece]
     return dict(
         title=title,

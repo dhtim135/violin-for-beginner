@@ -81,7 +81,7 @@ try {
   for (const { titles } of groups) {
     assert.deepEqual(titles, [...titles].sort((a, b) => a.localeCompare(b, "en")));
   }
-  await page.getByRole("button", { name: /Little Bo-Peep.*小牧羊女.*Five notes/ }).waitFor();
+  await page.getByRole("button", { name: /Baa, Baa, Black Sheep.*咩咩黑绵羊.*Open G/ }).waitFor();
   await page.getByRole("button", { name: /Triplet arpeggios/ }).click();
   await page.locator("#bootError").waitFor();
   assert.match(await page.textContent("#title"), /Triplet arpeggios/);
@@ -338,7 +338,7 @@ try {
       .isEnabled(),
     true,
   );
-  await page.goto(url + "/?piece=ode-to-joy");
+  await page.goto(url + "/?piece=starter");
   await page.waitForSelector("[data-note]");
   await page.check("#showBows");
   await page.click("#practice summary");
@@ -346,19 +346,19 @@ try {
   assert.match(await page.textContent(".scale-line"), /F♯/);
   assert.equal(await page.locator(".fingerboard tbody tr").count(), 4);
   assert.equal(await page.locator(".bow-group").count(), 4);
-  const odeNotes = page.locator("#notation [data-note]");
-  await odeNotes.nth(1).click();
+  const studyNotes = page.locator("#notation [data-note]");
+  await studyNotes.nth(1).click();
   await page.click("#joinBow");
-  assert.equal(await odeNotes.nth(1).getAttribute("data-stroke"), await odeNotes.nth(2).getAttribute("data-stroke"));
+  assert.equal(await studyNotes.nth(1).getAttribute("data-stroke"), await studyNotes.nth(2).getAttribute("data-stroke"));
   assert.equal(await page.locator(".bow-group").count(), 3);
   await page.selectOption("#bowMode", "up");
   await page.click("#save");
   await page.waitForFunction(() => document.querySelector("#save").textContent.includes("Saved"));
   await page.click("#library");
-  await page.locator("#dialog .sourceitem").filter({ hasText: "Ode to Joy" }).first().click();
-  await odeNotes.nth(1).click();
+  await page.locator("#dialog .sourceitem").filter({ hasText: "Twinkle, Twinkle" }).first().click();
+  await studyNotes.nth(1).click();
   assert.equal(await page.inputValue("#bowMode"), "up");
-  assert.equal(await odeNotes.nth(1).getAttribute("data-stroke"), await odeNotes.nth(2).getAttribute("data-stroke"));
+  assert.equal(await studyNotes.nth(1).getAttribute("data-stroke"), await studyNotes.nth(2).getAttribute("data-stroke"));
   await page.click("#tools");
   await page.uncheck("#count");
   await page.click("#play");
@@ -370,16 +370,16 @@ try {
   assert.match(await page.textContent(".scale-line"), /G♯/);
   await page.click("#undo");
   await page.check("#printCard");
-  const odeDownload = page.waitForEvent("download");
+  const studyDownload = page.waitForEvent("download");
   await page.click("#export");
-  await (await odeDownload).saveAs(dir + "/ode-bowing.pdf");
-  const cardText = execFileSync("pdftotext", ["-layout", dir + "/ode-bowing.pdf", "-"], { encoding: "utf8" });
+  await (await studyDownload).saveAs(dir + "/starter-bowing.pdf");
+  const cardText = execFileSync("pdftotext", ["-layout", dir + "/starter-bowing.pdf", "-"], { encoding: "utf8" });
   assert.match(cardText, /Right hand · Bar 1/);
   assert.match(cardText, /One-octave scale/);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator("#practice").scrollIntoViewIfNeeded();
   assert.ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth));
-  await page.screenshot({ path: dir + "/ode-card-mobile.png" });
+  await page.screenshot({ path: dir + "/starter-card-mobile.png" });
   assert.deepEqual(errors, []);
   console.log("All browser workflows passed. Artifacts: " + dir);
 } finally {

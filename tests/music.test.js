@@ -126,3 +126,15 @@ test("a bow join survives a tied rhythm split and scale spellings follow the key
     ["D", "E", "F♯", "G", "A", "B", "C♯", "D"]);
   assert.equal(writtenPitch(65, "F#"), "E♯");
 });
+
+test("mixed quarter and eighth triplets retain exact timing through repeated edits", async () => {
+  const { spellRhythm } = await import("../web/music.js");
+  const lengths = [32, 32, 32, 64, 64, 64, 64, 64, 32, 32];
+  const s = line(lengths.map(() => 62));
+  s.notices = [];
+  allEvents(s).forEach((n, i) => n.ticks = lengths[i]);
+  spellRhythm(s);
+  spellRhythm(s);
+  assert.deepEqual(allEvents(s).map(n => n.ticks), lengths);
+  assert.deepEqual(s.notices, []);
+});

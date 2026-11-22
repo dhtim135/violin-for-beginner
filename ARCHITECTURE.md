@@ -15,7 +15,7 @@ This is a single-user, loopback web app. One Python process serves a JavaScript 
 
 At startup, the catalogue also reads an optional `private-editions.json` in the local data directory. Each entry is keyed by its piece ID and contains the picker row and normalized score. These local entries follow the same browse, search, playback, save and print paths as built-in pieces. A fresh install gets the public catalogue. The setup script fetches tools and dependencies only.
 
-`assets/babys-opera.zip` holds the 20 original MusicXML transcriptions from Project Gutenberg’s edition of *The Baby’s Opera*. `studio/nursery.py` selects the upper staff, applies each tune’s practice key and tempo, and uses the same score normalizer as imports. The catalogue links each arrangement to its corresponding printed score. [Source collection](https://www.gutenberg.org/ebooks/25418)
+`assets/babys-opera.zip` holds the three selected MusicXML transcriptions from Project Gutenberg’s edition of *The Baby’s Opera*. `studio/nursery.py` selects the upper staff, applies each tune’s practice key and tempo, and uses the same score normalizer as imports. The catalogue links each arrangement to its corresponding printed score. [Source collection](https://www.gutenberg.org/ebooks/25418)
 
 `studio/transcribe.py` owns audio inference and melody selection.
 

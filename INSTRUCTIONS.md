@@ -2,13 +2,11 @@
 
 Open **http://127.0.0.1:8427** on the computer running the server. The starter melody opens immediately. Click **Play**, then click a note, choose a string and finger, and click **Apply change**. **Hear note** plays the selected pitch. Use **Save score** to add it to **My scores**, or **Download PDF** to print the current arrangement.
 
-The controls are in English. Built-in pieces show their original and Simplified Chinese names side by side, including in PDFs. Search for either name, such as **Little Bo-Peep** or **小牧羊女**. 指法 examples: `G` = G 弦空弦, `D3` = D 弦第三指, `A2↓` = A 弦低二指, `A2↑` = A 弦高二指. The letter always names the string. The number always names the finger.
+The controls are in English. Built-in pieces show their original and Simplified Chinese names side by side, including in PDFs. Search for either name, such as **Jingle Bells** or **铃儿响叮当**. 指法 examples: `G` = G 弦空弦, `D3` = D 弦第三指, `A2↓` = A 弦低二指, `A2↑` = A 弦高二指. The letter always names the string. The number always names the finger.
 
-Use **Switch piece** above the title to choose a starter or reopen a saved arrangement. English titles are sorted A–Z within each group. Try **Hot Cross Buns** for a three-note melody, **Frère Jacques** for string changes, or **Pixel Parade** for an original game-style tune. Title search also accepts **两只老虎** and **欢乐颂**.
+Use **Switch piece** above the title to choose a starter or reopen a saved arrangement. English titles are sorted A–Z within each group. Try **Frère Jacques** for string changes or **Baa, Baa, Black Sheep** for the lower strings. The three pieces from *The Baby’s Opera* work offline and link to the printed source under **Score tools → Score & source**.
 
-For a five-note melody, choose **Little Bo-Peep**. Try **Baa, Baa, Black Sheep** for the lower strings, **Oranges and Lemons** for a three-beat pulse, or **Three Blind Mice** for descending notes and ties. For a four-bar study, try **Warm Hands**. For a longer song in G major, choose **Over the Hills and Far Away**. All 20 tunes from *The Baby’s Opera* work offline. Find them together by searching **Baby’s Opera**, or search by a Chinese title such as **三只盲鼠**. **Score tools → Score & source** links to the printed setting used for each arrangement.
-
-For classical themes, choose **Ode to Joy** or **New World Symphony · Largo**. For other repertoire you have permission to use, choose **Import music** and provide your own score image, PDF or audio excerpt. Save the result to **My scores**. An existing local edition collection in `VIOLIN_DATA/private-editions.json` also appears in the picker after restart. Include that file when backing up the library.
+For other repertoire you have permission to use, choose **Import music** and provide your own score image, PDF or audio excerpt. Save the result to **My scores**. An existing local edition collection in `VIOLIN_DATA/private-editions.json` also appears in the picker after restart. Include that file when backing up the library.
 
 ## Start or restart
 
@@ -37,7 +35,7 @@ Setup uses the Node lockfile and a pinned Python 3.10.20 ONNX environment. It in
 | --- | --- | --- |
 | Image | [Rhythm example](samples/rhythm.png) | Choose the recognized part. Look for the rest and dotted rhythm. Open the original under **Score & source** to compare. |
 | PDF | [Finger placement example](samples/placement.pdf), page 1 | Select pages such as `1-3, 5` and choose a part. Compare the low/high second-finger placements. |
-| Search | Search **Die Forelle** or **Just for Today** | Choose an edition, then the vocal part. Other parts are available under **Score & source**. **Four strings** and **小星星** also work offline. |
+| Search | Search **Die Forelle** or **Just for Today** | Choose an edition, then the vocal part. Other parts are available under **Score & source**. **Frère Jacques** and **小星星** also work offline. |
 | Audio | [Four-second melody](samples/melody.wav), tempo 120 | Generate a suggested melody and compare it with the original excerpt in **Score & source**. Try a recording of a single instrument next. |
 
 Uploads are limited to 40 MB each, PDFs to 12 selected pages and audio to 180 seconds per segment. PNG/JPEG and the audio extensions listed in the file picker are supported. Selecting a shorter excerpt is useful for long recordings. Search covers the pinned OpenScore Lieder repertoire plus local starters. Retrieving an online edition needs internet access. Local uploads, playback, editing, saving and PDF generation work offline after setup.
@@ -50,7 +48,7 @@ Click **Key** beside **Speed**, then click a named key in the panel to play in a
 
 ## Bowing and the practice card
 
-Open **Switch piece → Ode to Joy 欢乐颂**, then turn on **Show bowing**. The square-topped mark means down bow (下弓, frog to tip). The V means up bow (上弓, tip to frog). Finger arrows below the staff still mean low or high placement. During playback, green follows the current note and ochre marks the other notes in the same stroke.
+Open **Switch piece → Twinkle, Twinkle, Little Star 小星星**, then turn on **Show bowing**. The square-topped mark means down bow (下弓, frog to tip). The V means up bow (上弓, tip to frog). Finger arrows below the staff still mean low or high placement. During playback, green follows the current note and ochre marks the other notes in the same stroke.
 
 Select a note to see whether its bow comes from source notation, a suggestion or your edit. Choose **One bow with next note** to slur the two notes together. Choose **Separate bow** on the second note to split the stroke, or **Use source or suggestion** to clear that note's override. A tie holds the same pitch through its written durations. Save the score to keep bow edits.
 

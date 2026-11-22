@@ -96,18 +96,24 @@ export function pitchName(p) {
 function gcd(a, b) {
   return b ? gcd(b, a % b) : a;
 }
-// Three equal eighth-note triplets occupy one quarter-note beat (96 ticks).
-function eighthTriplets(events) {
+// Group eighth/quarter triplet values back to whole beats, including a
+// quarter-triplet group ending in two eighths. ABC needs the written count.
+function tripletGroups(events) {
   const members = new Map();
   let offset = 0;
   for (let i = 0; i < events.length; i++) {
-    if (
-      offset % 96 === 0 &&
-      events[i].ticks === 32 &&
-      events[i + 1]?.ticks === 32 &&
-      events[i + 2]?.ticks === 32
-    ) {
-      for (let j = 0; j < 3; j++) members.set(i + j, j);
+    if (offset % 96 === 0 && !members.has(i)) {
+      let ticks = 0;
+      for (let end = i; end < events.length; end++) {
+        const length = events[end].ticks;
+        if (length !== 32 && length !== 64) break;
+        ticks += length;
+        if (ticks % 96 === 0) {
+          for (let j = i; j <= end; j++) members.set(j, j === i ? end - i + 1 : 0);
+          break;
+        }
+        if (ticks >= 192) break;
+      }
     }
     offset += events[i].ticks;
   }
@@ -127,15 +133,15 @@ function scoreAbc(score, bows) {
     const compound = beats > 3 && beats % 3 === 0 && unit === 8;
     const beatTicks = (384 / unit) * (compound ? 3 : 1);
     const accidentals = {};
-    const triplets = eighthTriplets(bar.events);
+    const triplets = tripletGroups(bar.events);
     let elapsed = 0;
     let previousBeat = -1;
     for (const [i, note] of bar.events.entries()) {
       const beat = Math.floor(elapsed / beatTicks);
       if (beat !== previousBeat) music += " ";
       previousBeat = beat;
-      if (triplets.get(i) === 0) music += "(3";
-      const ticks = triplets.has(i) ? 48 : note.ticks;
+      if (triplets.get(i)) music += "(3:2:" + triplets.get(i);
+      const ticks = triplets.has(i) ? note.ticks * 1.5 : note.ticks;
       const g = gcd(ticks, 96);
       const stroke = bows?.get(note.id)?.stroke;
       if (stroke?.ids[0] === note.id) {
@@ -295,7 +301,7 @@ export function spellRhythm(score) {
   for (const bar of score.bars) {
     let cursor = 0,
       written = 0;
-    const triplets = eighthTriplets(bar.events);
+    const triplets = tripletGroups(bar.events);
     bar.events = bar.events.flatMap((n, index) => {
       cursor += n.ticks;
       if (triplets.has(index) && written === cursor - n.ticks) {
