@@ -356,7 +356,13 @@ try {
   assert.match(await page.locator(".card-hands .right-cue").textContent(), /Continue up bow/);
   assert.match(await studyNotes.nth(2).textContent(), /↳ Up/);
   assert.equal(await page.locator(".card-hands").getAttribute("data-hand-note"), continuedId);
-  assert.equal(await page.locator(".card-hands .finger-tag").textContent(), "A");
+  const cardMap = page.locator(".card-hands .finger-map");
+  const positions = await cardMap.locator("[data-position]").evaluateAll(items => items.map(item => item.dataset.position).sort());
+  assert.deepEqual(positions, await page.locator(".fingerboard [data-fingering]").evaluateAll(items => items.map(item => item.dataset.fingering).sort()));
+  assert.equal(await cardMap.locator(".active-position text").textContent(), "A");
+  assert.equal(await cardMap.locator(".active-position .open-position").count(), 1);
+  assert.ok((await page.locator(".card-hands svg").boundingBox()).width >= 300);
+  assert.ok((await page.locator("#noteHands svg").boundingBox()).width >= 200);
   assert.equal(await page.locator(".current-finger").getAttribute("data-fingering"), "A");
   assert.match(await page.locator("#noteHands .left-cue").textContent(), /D string · open string/);
   await page.selectOption("#bowMode", "up");
@@ -395,6 +401,32 @@ try {
   await page.locator("#practice").scrollIntoViewIfNeeded();
   assert.ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth));
   await page.screenshot({ path: dir + "/starter-card-mobile.png" });
+  // The full chromatic first-position map places sixteen labels on each side.
+  const denseMap = await page.evaluate(async () => {
+    const base = document.querySelector('link[rel="stylesheet"]').href;
+    const { setHandPositions, renderHands } = await import(new URL("violin.js", base));
+    const { strings, choices } = await import(new URL("music.js", base));
+    const notes = strings.flatMap(([string, open]) => Array.from({ length: 8 }, (_, step) => ({
+      pitch: open + step, fingering: choices(open + step).find(f => f.string === string),
+    })));
+    const host = document.createElement("div");
+    host.className = "card-hands";
+    document.body.append(host);
+    try {
+      setHandPositions(host, notes);
+      renderHands(host, { id: "rest", pitch: null }, null, "D");
+      const boxes = [...host.querySelectorAll("[data-position] text")].map(t => t.getBoundingClientRect());
+      const frame = host.querySelector("svg").getBoundingClientRect();
+      return {
+        count: boxes.length,
+        active: host.querySelectorAll(".active-position").length,
+        inside: boxes.every(a => a.top >= frame.top && a.bottom <= frame.bottom),
+        overlap: boxes.some((a, i) => boxes.slice(i + 1).some(b =>
+          a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top)),
+      };
+    } finally { host.remove(); }
+  });
+  assert.deepEqual(denseMap, { count: 32, active: 0, inside: true, overlap: false });
   // A bar jump and an exact-note jump work independently of the current editor.
   await page.goto(url + "/?piece=frere-jacques");
   await page.waitForSelector("[data-note]");

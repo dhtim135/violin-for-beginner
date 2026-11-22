@@ -1,4 +1,4 @@
-import { renderHands } from "./violin.js";
+import { renderHands, setHandPositions } from "./violin.js";
 import { allEvents, strings, suggest, shortFinger } from "./music.js";
 import { keyLabel, scalePitches, writtenPitch } from "./keys.js";
 
@@ -40,6 +40,7 @@ export function renderCard(root, score, bows, barIndex = 0, scale = false, noteI
   const notes = allEvents(score).filter(n => n.pitch !== null);
   const bar = score.bars[barIndex];
   const overview = element("div", null, "card-hands");
+  setHandPositions(overview, notes);
   const note = bar.events.find(n => n.id === noteId) || bar.events[0];
   root.replaceChildren(element("h3", "On the violin · Bar " + (barIndex + 1)), overview,
     element("h3", "Left hand · Notes in this piece"));

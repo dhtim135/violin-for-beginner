@@ -50,7 +50,7 @@ Click **Key** beside **Speed**, then click a named key in the panel to play in a
 
 Open **Switch piece → Twinkle, Twinkle, Little Star 小星星**, with **Show bowing** enabled by default. The square-topped mark means down bow (下弓, frog to tip). The V means up bow (上弓, tip to frog). A hooked arrow (↳) means continue the same stroke through that note. Finger arrows below the staff still mean low or high placement. During playback, green follows the current note and ochre marks the other notes in the same stroke.
 
-Select a note to see both hands on a whole violin. A green marker identifies where to place your finger, an open circle marks an open string, and the arrow beside the bow shows the direction of travel. Press **Esc** or **Close** to return to the selected note.
+Select a note to see both hands on a whole violin. Labels beside the neck show the string and finger for every placement used in the piece. Follow a label’s line to its spot on the string. The current label is green and underlined. An open circle marks an open string, and the arrow beside the bow shows the direction of travel. Press **Esc** or **Close** to return to the selected note.
 
 Select a note to see whether its bow comes from source notation, a suggestion or your edit. Choose **One bow with next note** to slur the two notes together. Choose **Separate bow** on the second note to split the stroke, or **Use source or suggestion** to clear that note's override. A tie holds the same pitch through its written durations. Save the score to keep bow edits.
 

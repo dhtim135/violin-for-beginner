@@ -176,7 +176,7 @@ h2 {
 }
 @media (min-width: 851px) {
   .workspace.with-tools {
-    grid-template-columns: minmax(0, 1fr) 250px;
+    grid-template-columns: minmax(0, 1fr) clamp(270px, 24vw, 320px);
   }
 }
 #switchPiece {
@@ -574,7 +574,7 @@ button:focus-visible,
 #closeTools { font-size: 13px; padding: 5px 8px; }
 #closeTools kbd { color: var(--muted); font-size: 11px; }
 
-.hands-guide { margin: 0; display: grid; grid-template-columns: minmax(100px, 175px) 1fr; align-items: center; gap: 18px; }
+.hands-guide { margin: 0; display: grid; grid-template-columns: minmax(220px, 340px) minmax(0, 1fr); align-items: center; gap: 18px; }
 .hands-guide svg { width: 100%; height: auto; }
 .hands-guide .active-wire { stroke: #267750; stroke-width: 2.8; }
 .hands-guide figcaption { display: grid; gap: 12px; line-height: 1.35; }
@@ -582,11 +582,24 @@ button:focus-visible,
 .hands-guide b { color: var(--green); font-size: .9em; margin-bottom: 3px; }
 .hands-note { font: 600 1.35em var(--serif); }
 .card-hands { border-block: 1px solid var(--line); padding: 8px 0; }
-#noteHands .hands-guide { grid-template-columns: 76px 1fr; gap: 6px; font-size: 13px; margin: 10px 0; }
+#noteHands .hands-guide { grid-template-columns: 1fr; gap: 4px; margin: 12px 0; }
+#noteHands svg { max-width: 242px; justify-self: center; }
 #noteHands figcaption { gap: 8px; }
 .bow-group [data-preview-note] { border-radius: 4px; padding: 3px 5px; font-size: inherit; font-weight: 500; }
 .bow-group [aria-pressed="true"] { border-color: var(--green); background: #e2eddd; }
-@media (max-width: 520px) { .card-hands .hands-guide { grid-template-columns: 118px 1fr; gap: 10px; } }
-@media print { .card-hands .hands-guide { grid-template-columns: 128px 1fr; } .hands-guide { break-inside: avoid; } }
+@media (max-width: 680px) {
+  .card-hands .hands-guide { grid-template-columns: 1fr; gap: 8px; }
+  .card-hands svg { max-width: 290px; justify-self: center; }
+}
+@media print { .card-hands .hands-guide { grid-template-columns: 210px 1fr; } .hands-guide { break-inside: avoid; } }
 
 .fingerboard td .current-finger { color: white; background: var(--green); outline: 2px solid var(--green); outline-offset: 2px; }
+
+.finger-map path { fill: none; stroke: #647467; stroke-width: .8; }
+.finger-map text { fill: #384e41; font: 600 12px var(--sans); }
+.finger-map circle { fill: #ced8ca; stroke: #37483c; stroke-width: .65; }
+.finger-map .open-position { fill: white; }
+.finger-map .active-position text { fill: #135c40; font-weight: 800; text-decoration: underline; }
+.finger-map .active-position path { stroke: #185f43; stroke-width: 1.6; }
+.finger-map .active-position circle { fill: #126047; stroke: white; stroke-width: 1.15; }
+.finger-map .active-position .open-position { fill: white; stroke: #126047; stroke-width: 1.6; }

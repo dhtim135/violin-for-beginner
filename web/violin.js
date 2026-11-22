@@ -14,7 +14,7 @@ function handsTemplate() {
   template = document.createElement("template");
   template.innerHTML = `
     <figure class="hands-guide">
-      <svg viewBox="0 0 240 328" role="img" aria-label="Violin seen from the front with scroll up">
+      <svg viewBox="0 -22 240 346" role="img" aria-label="Violin seen from the front with scroll up">
         <g stroke="#65412b" stroke-width="1.8" stroke-linejoin="round">
           <path fill="#c88b50" d="M109 142 C92 135 72 142 66 163 Q61 181 62 186 L59 192 Q70 188 75 194 Q83 209 60 219 L64 222 C42 246 46 279 66 295 Q83 309 111 310 Q118 316 125 310 C152 311 176 299 184 278 Q195 249 172 222 L176 219 Q153 209 161 194 Q166 188 177 192 L174 186 Q175 178 170 162 C163 143 146 135 127 142Z"/>
           <path fill="none" stroke="#a36c41" d="M105 145 Q75 137 68 166 M131 145 Q160 137 168 166 M58 241 Q43 293 104 305 M178 241 Q193 293 132 305"/>
@@ -39,11 +39,7 @@ function handsTemplate() {
           <circle class="bow-contact" cy="216" r="3.8" fill="#923b13" stroke="white"/>
           <path class="bow-arrow" d="M-19 0h38m-6-5 6 5-6 5" fill="none" stroke="#923b13" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
         </g>
-        <g class="finger-guide">
-          <path class="finger-leader" fill="none" stroke="#17644b" stroke-width="1.6"/>
-          <text class="finger-tag" x="63" text-anchor="end" fill="#17543f" font-family="sans-serif" font-size="19" font-weight="bold"></text>
-          <circle class="finger-spot" r="5.5" stroke-width="2.5"/>
-        </g>
+        <g class="finger-map"></g>
       </svg>
       <figcaption>
         <div class="hands-note"></div>
@@ -54,8 +50,60 @@ function handsTemplate() {
   return template;
 }
 
-export function renderHands(host, note, bow, key) {
+function svgElement(name, attributes) {
+  const node = document.createElementNS("http://www.w3.org/2000/svg", name);
+  for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
+  return node;
+}
+
+// Keep each dot on the sounding string. Fan labels out on either side of the
+// neck so adjacent semitones and unisons on different strings stay legible.
+export function setHandPositions(host, notes) {
   if (!host.firstElementChild) host.append(handsTemplate().content.cloneNode(true));
+  const map = host.querySelector(".finger-map");
+  map.replaceChildren();
+  const positions = new Map();
+  for (const note of notes) {
+    if (note.pitch === null || !note.fingering) continue;
+    const label = shortFinger(note.fingering);
+    if (positions.has(label)) continue;
+    const wire = strings.findIndex(([name]) => name === note.fingering.string);
+    if (wire < 0) continue;
+    const step = note.pitch - strings[wire][1];
+    const y = nut + (bridge - nut) * (1 - 2 ** (-step / 12));
+    positions.set(label, { label, wire, y, open: step === 0 });
+  }
+  let viewTop = -8;
+  for (const left of [true, false]) {
+    const side = [...positions.values()].filter(p => (p.wire < 2) === left)
+      .sort((a, b) => a.y - b.y || a.wire - b.wire);
+    if (!side.length) continue;
+    const labelX = left ? 65 : 170;
+    const rows = [];
+    for (const p of side) rows.push(Math.max(p.y, (rows.at(-1) ?? -Infinity) + 18));
+    const spread = rows.at(-1) - side.at(-1).y;
+    const shift = Math.max(spread / 2, rows.at(-1) - 195);
+    viewTop = Math.min(viewTop, rows[0] - shift - 12);
+    for (const [i, p] of side.entries()) {
+      const row = rows[i] - shift;
+      const x = stringX(p.wire, p.y);
+      const group = svgElement("g", { "data-position": p.label });
+      const leader = svgElement("path", {
+        d: `M${left ? 69 : 166} ${row} H${left ? 80 : 155} L${left ? 104 : 132} ${p.y} H${x}`,
+      });
+      const label = svgElement("text", { x: labelX, y: row, "text-anchor": left ? "end" : "start", dy: ".34em" });
+      label.textContent = p.label;
+      const dot = svgElement("circle", { cx: x, cy: p.y, r: 1.65, class: p.open ? "open-position" : "" });
+      group.append(leader, label, dot);
+      map.append(group);
+    }
+  }
+  const svg = host.querySelector("svg");
+  svg.setAttribute("viewBox", `0 ${viewTop} 240 ${324 - viewTop}`);
+  svg.setAttribute("aria-description", "Fingerings in this piece: " + [...positions.keys()].join(", "));
+}
+
+export function renderHands(host, note, bow, key) {
   const get = selector => host.querySelector(selector);
   const f = note.fingering;
   const wireIndex = strings.findIndex(([name]) => name === f?.string);
@@ -77,21 +125,16 @@ export function renderHands(host, note, bow, key) {
   host.dataset.handNote = note.id;
   for (const [index, wire] of [...host.querySelectorAll("[data-wire]")].entries())
     wire.classList.toggle("active-wire", playable && index === wireIndex);
-  const spot = get(".finger-spot"), contact = get(".bow-contact");
-  get(".finger-guide").style.display = contact.style.display = playable ? "" : "none";
-  if (playable) {
-    const semitones = note.pitch - strings[wireIndex][1];
-    const y = nut + (bridge - nut) * (1 - 2 ** (-semitones / 12));
-    const x = stringX(wireIndex, y);
-    get(".finger-leader").setAttribute("d", "M67 " + y + "H" + x);
-    get(".finger-tag").setAttribute("y", y + 5);
-    get(".finger-tag").textContent = shortFinger(f);
-    spot.setAttribute("cx", x);
-    spot.setAttribute("cy", y);
-    spot.setAttribute("fill", f.finger ? "#17644b" : "white");
-    spot.setAttribute("stroke", f.finger ? "white" : "#17644b");
-    contact.setAttribute("cx", stringX(wireIndex, 216));
+  const activeLabel = playable ? shortFinger(f) : null;
+  for (const position of host.querySelectorAll("[data-position]")) {
+    const active = position.dataset.position === activeLabel;
+    position.classList.toggle("active-position", active);
+    position.querySelector("circle").setAttribute("r", active ? 3.1 : 1.65);
+    if (active) position.parentNode.append(position); // Draw the selected dot over its neighbours.
   }
+  const contact = get(".bow-contact");
+  contact.style.display = playable ? "" : "none";
+  if (playable) contact.setAttribute("cx", stringX(wireIndex, 216));
   get(".bow-picture").style.display = bow ? "" : "none";
   get(".bow-arrow").setAttribute("transform", "translate(189 194) scale(" + (down ? 1 : -1) + " 1)");
 }

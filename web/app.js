@@ -1,4 +1,4 @@
-import { renderHands } from "./violin.js";
+import { renderHands, setHandPositions } from "./violin.js";
 import { bowPlan } from "./bowing.js";
 import { renderCard, updateCardNote } from "./practice-card.js";
 import { songTitle } from "./title.js";
@@ -187,6 +187,7 @@ function draw() {
   );
   $("first").value = Math.min(+$("first").value, +$("last").value);
   bows = bowPlan(score);
+  setHandPositions($("noteHands"), allEvents(score));
   noteLocations = new Map();
   score.bars.forEach((bar, index) => bar.events.forEach(note =>
     noteLocations.set(note.id, { note, bar: index + 1 })));

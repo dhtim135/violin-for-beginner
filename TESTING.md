@@ -20,7 +20,7 @@ The browser suite generates its own 24-bar study in the temporary local library.
 
 The public catalogue test checks the seven retained titles. All offline editions are checked for matching bilingual titles, measure lengths and first-position range.
 
-The bowing checks cover source up-bows, violin versus piano slurs in MusicXML, tied durations, rests, group edits and scale spelling. The browser joins two notes in *Twinkle, Twinkle, Little Star*, changes and saves a bow direction, reopens the edition, checks playback highlighting and transposition, and inspects the PDF card and mobile viewport. It also checks continuation labels, open strings on the whole violin, note previews, the highlighted fingerboard position and Escape focus after staff reflow.
+The bowing checks cover source up-bows, violin versus piano slurs in MusicXML, tied durations, rests, group edits and scale spelling. The browser joins two notes in *Twinkle, Twinkle, Little Star*, changes and saves a bow direction, reopens the edition, checks playback highlighting and transposition, and inspects the PDF card and mobile viewport. It also checks continuation labels, matching labels on the enlarged violin and fingerboard, open strings, note previews, the highlighted fingerboard position and Escape focus after staff reflow.
 
 ## Quality measurements
 

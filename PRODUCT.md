@@ -97,7 +97,7 @@ The public catalogue contains original studies, beginner arrangements of public-
 
 ## Bowing and the piece-specific practice card
 
-By default, each pitched note shows its bow direction above the staff and its finger label below. Continuing a slur or tie has its own cue. Selecting a note opens a two-hand guide on a whole violin. Escape closes the editor and returns keyboard focus to the note. They can join adjacent notes in one stroke, change the direction, undo and save. Playback highlights both the sounding event and the stroke. The card shows assigned finger positions on all four strings, optionally adds a one-octave scale, and diagrams the strokes for a chosen bar. Both the printed overlay and the appended PDF card are optional.
+By default, each pitched note shows its bow direction above the staff and its finger label below. Continuing a slur or tie has its own cue. Selecting a note opens an enlarged whole-violin guide showing every finger placement used in the current revision and highlighting the selected one. Escape closes the editor and returns keyboard focus to the note. They can join adjacent notes in one stroke, change the direction, undo and save. Playback highlights both the sounding event and the stroke. The card shows assigned finger positions on all four strings, optionally adds a one-octave scale, and diagrams the strokes for a chosen bar. Both the printed overlay and the appended PDF card are optional.
 
 Preserve explicit source bow directions and simple slurs on identified bowed-string parts. Unmarked passages and audio drafts use editable practice suggestions. Recognized marks can be checked against the uploaded original.
 
