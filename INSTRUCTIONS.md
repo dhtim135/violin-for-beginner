@@ -56,6 +56,8 @@ Open **Practice card · 指法与弓法** above the staff. The four-string diagr
 
 ## Read and correct a draft
 
+- Set **Start at bar** and press **Play** to begin at that measure. For a precise entrance, click a note or rest on the staff, then **▶ Play from here** in Score tools. Inside a loop, the first pass starts at that note and subsequent passes begin at the first loop bar. The count-in follows the meter at your starting position.
+- Open **Switch piece** to browse while listening. Choosing another score stops playback when that score opens.
 - Click **Pause** to hold your place and **Resume** to continue, including during the count-in. **Reset** stops playback and returns the next **Play** to the first bar of the piece or selected loop. Playback follows the highlighted note and finger label. Choose speed, count-in and optional inclusive start/end bars before pressing Play. Changing these controls stops playback.
 - Click a note or rest to change pitch, duration or fingering. A manually selected fingering survives subsequent automatic suggestions. **Insert after** duplicates the selected event. **Delete** removes it. **Merge with next** keeps the first pitch and combines durations. Use **Undo edit** before saving if needed.
 - Rhythm edits shift later events. Bar boundaries can split sustained notes into tied pieces. Newly imported tuplets and fine timing may be simplified, with a notice in the score.

@@ -49,6 +49,7 @@
           <button class="play" id="play">▶ Play</button>
           <button id="resetPlayback" disabled>Reset</button>
         </div>
+        <label id="startBarLabel">Start at bar <input id="startBar" type="number" min="1" value="1" /></label>
         <label
           >Speed
           <select id="speed">
@@ -120,6 +121,7 @@
           </p>
           <div id="selection">Select a note to edit.</div>
           <form id="edit" hidden>
+            <button id="fromNote" type="button">▶ Play from here</button>
             <label>Pitch<select id="pitch"></select></label
             ><label>Duration<select id="duration"></select></label
             ><label>String &amp; finger<select id="finger"></select></label

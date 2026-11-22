@@ -72,7 +72,7 @@ let score,
 function setPlaybackState(state) {
   playbackState = state;
   $("play").textContent = { idle: "▶ Play", playing: "Ⅱ Pause", paused: "▶ Resume" }[state];
-  $("resetPlayback").disabled = state === "idle";
+  $("resetPlayback").disabled = state === "idle" && ($("loop").checked || +$("startBar").value === 1);
 }
 function halt() {
   playbackRequest++;
@@ -141,6 +141,8 @@ function accept(data, id = null, rev = 0, initial = false) {
     $("keys").open = false;
   }
   $("cardBar").value = 1;
+  $("startBar").value = 1;
+  setPlaybackState("idle");
   $("first").value = 1;
   $("last").value = score.bars.length;
   $("feedback").textContent = "";
@@ -157,7 +159,8 @@ function draw() {
   $("tempo").textContent = "♩ " + score.bpm + " BPM";
   $("undo").disabled = !history.length;
   $("save").textContent = identity && !dirty ? "Saved ✓" : "Save score";
-  $("first").max = $("last").max = score.bars.length;
+  $("startBar").max = $("first").max = $("last").max = score.bars.length;
+  if (+$("startBar").value > score.bars.length) $("startBar").value = score.bars.length;
   $("last").value = Math.min(
     score.bars.length,
     Number($("last").value) || score.bars.length,
@@ -517,16 +520,18 @@ $("undo").onclick = () => {
 $("loop").onchange = () => {
   halt();
   $("range").hidden = !$("loop").checked;
+  $("startBarLabel").hidden = $("loop").checked;
 };
-for (const k of ["speed", "first", "last", "count"]) $(k).onchange = halt;
+for (const k of ["speed", "first", "last", "count", "startBar"]) $(k).onchange = halt;
 $("resetPlayback").onclick = () => {
+  $("startBar").value = 1;
   halt();
   $("play").focus();
 };
-$("play").onclick = guard(async () => {
+async function transport(fromId = null) {
   if ($("play").hasAttribute("aria-busy")) return;
   const loop = $("loop").checked,
-    first = loop ? +$("first").value - 1 : 0,
+    first = loop ? +$("first").value - 1 : +$("startBar").value - 1,
     last = loop ? +$("last").value - 1 : score.bars.length - 1;
   if (
     first < 0 ||
@@ -535,7 +540,12 @@ $("play").onclick = guard(async () => {
     !Number.isInteger(first) ||
     !Number.isInteger(last)
   )
-    throw Error("Set a valid first and last bar.");
+    throw Error(loop ? "Set a valid first and last bar." : "Choose a start bar from 1 to " + score.bars.length + ".");
+  if (fromId !== null) {
+    if (!score.bars.slice(first, last + 1).some(bar => bar.events.some(n => n.id === fromId)))
+      throw Error("Choose a note inside the loop or turn Loop bars off.");
+    halt();
+  }
   const request = ++playbackRequest;
   $("play").setAttribute("aria-busy", "true");
   try {
@@ -553,6 +563,7 @@ $("play").onclick = guard(async () => {
     await play(
       score,
       {
+        fromId,
         speed: +$("speed").value,
         count: $("count").checked,
         loop,
@@ -562,7 +573,7 @@ $("play").onclick = guard(async () => {
       (id) => {
         lightNote(id);
         if (
-          lastLit &&
+          !$("pieces").open && lastLit &&
           (lastLit.getBoundingClientRect().bottom > innerHeight ||
             lastLit.getBoundingClientRect().top < 0)
         )
@@ -576,6 +587,12 @@ $("play").onclick = guard(async () => {
   } finally {
     if (request === playbackRequest) $("play").removeAttribute("aria-busy");
   }
+}
+$("play").onclick = guard(() => transport());
+$("fromNote").onclick = guard(() => {
+  if (!$("loop").checked)
+    $("startBar").value = score.bars.findIndex(bar => bar.events.some(n => n.id === selected)) + 1;
+  return transport(selected);
 });
 $("save").onclick = guard(async () => {
   const doc = score,
@@ -724,8 +741,8 @@ for (const [id, other] of [["pieces", "keys"], ["keys", "pieces"]]) {
     }
     if (!picker.open) return;
     $(other).open = false;
-    halt();
     if (id === "pieces") showSavedChoices();
+    else halt();
   };
   picker.onkeydown = (e) => {
     if (e.key === "Escape") {

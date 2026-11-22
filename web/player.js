@@ -53,7 +53,7 @@ function tone(freq, at, length, click = false) {
 }
 export async function play(
   score,
-  { speed, count, loop, first, last },
+  { speed, count, loop, first, last, fromId },
   highlight,
   done,
 ) {
@@ -65,7 +65,10 @@ export async function play(
   const beat = 60 / (score.bpm * speed),
     bars = score.bars.slice(first, last + 1);
   const notes = bars.flatMap((b) => b.events);
-  const [num, den] = bars[0].meter.split("/").map(Number);
+  const startIndex = fromId == null ? 0 : notes.findIndex(n => n.id === fromId);
+  if (startIndex < 0) throw Error("Choose a note inside the selected loop.");
+  const startBar = fromId == null ? bars[0] : bars.find(bar => bar.events.some(n => n.id === fromId));
+  const [num, den] = startBar.meter.split("/").map(Number);
   const start = ctx.currentTime + 0.08;
   let t = 0;
   const timeline = notes.map((n) => {
@@ -73,13 +76,15 @@ export async function play(
     t += item.len;
     return item;
   });
-  let base = start + (count ? (num * beat * 4) / den : 0),
-    initial = base,
-    cycle = t;
+  const initial = start + (count ? (num * beat * 4) / den : 0);
+  const offset = timeline[startIndex].t;
+  const cycle = t;
+  let base = initial - offset;
   if (count)
     for (let i = 0; i < num; i++)
       tone(i ? 850 : 1200, start + (i * beat * 4) / den, 0.05, true);
-  let idx = 0,
+  let idx = startIndex,
+    firstAttack = true,
     ended = false,
     active;
   function schedule() {
@@ -88,7 +93,7 @@ export async function play(
       if (
         n.pitch !== null &&
         !(
-          idx > 0 &&
+          !firstAttack && idx > 0 &&
           timeline[idx - 1].n.tie &&
           timeline[idx - 1].n.pitch === n.pitch
         )
@@ -103,6 +108,7 @@ export async function play(
           Math.max(0.03, duration * 0.98),
         );
       }
+      firstAttack = false;
       if (++idx === timeline.length) {
         idx = 0;
         if (loop) base += cycle;
@@ -112,13 +118,14 @@ export async function play(
   }
   function draw() {
     const elapsed = ctx.currentTime - initial;
-    if (!loop && elapsed >= cycle) {
+    const position = elapsed + offset;
+    if (!loop && position >= cycle) {
       stop();
       done();
       return;
     }
     if (elapsed >= 0) {
-      const pos = elapsed % cycle;
+      const pos = position % cycle;
       const item = timeline.findLast((x) => x.t <= pos);
       if (item && item.n.id !== active) {
         active = item.n.id;

@@ -380,6 +380,37 @@ try {
   await page.locator("#practice").scrollIntoViewIfNeeded();
   assert.ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth));
   await page.screenshot({ path: dir + "/starter-card-mobile.png" });
+  // A bar jump and an exact-note jump work independently of the current editor.
+  await page.goto(url + "/?piece=frere-jacques");
+  await page.waitForSelector("[data-note]");
+  const ids = await page.locator("[data-note]").evaluateAll(nodes => nodes.map(n => n.dataset.note));
+  await page.uncheck("#count");
+  await page.fill("#startBar", "2");
+  await page.click("#play");
+  await waitForNote(ids[4]);
+  await page.click("#switchPiece");
+  await page.waitForFunction(() => document.querySelector("#pieces").open);
+  await waitForNote(ids[5]);
+  assert.match(await playButton.textContent(), /Pause/);
+  await page.keyboard.press("Escape");
+  await resetButton.click();
+  assert.equal(await page.inputValue("#startBar"), "1");
+  await page.check("#loop");
+  await page.fill("#first", "2");
+  await page.fill("#last", "2");
+  await page.locator("[data-note]").nth(6).click();
+  await page.click("#fromNote");
+  await waitForNote(ids[6]);
+  await playButton.click();
+  await page.getByRole("button", { name: /Resume/ }).waitFor();
+  await playButton.click();
+  await waitForNote(ids[7]);
+  await waitForNote(ids[4]);
+  await page.click("#switchPiece");
+  await page.locator('#starterChoices button[value="jingle-bells"]').click();
+  await page.waitForFunction(() => document.querySelector("#title").textContent.includes("Jingle Bells"));
+  assert.match(await playButton.textContent(), /Play/);
+  assert.equal(await page.locator(".playing").count(), 0);
   assert.deepEqual(errors, []);
   console.log("All browser workflows passed. Artifacts: " + dir);
 } finally {

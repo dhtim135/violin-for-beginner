@@ -43,7 +43,7 @@ not a promise of perfect reconstruction of every instrument in a recording.
   placement hints such as low/high finger placement.
 - A concise legend explaining the notation.
 - Demonstration playback with synchronized highlighting.
-- Playback can pause and resume at the same position. Reset returns to the start of the piece or selected loop. Speed, count-in and loop bars are adjustable.
+- Playback can pause and resume at the same position. Reset returns to the start of the piece or selected loop. Players can start at a bar or a selected note or rest. Browsing the piece picker keeps playback running until a replacement score opens. Speed, count-in and loop bars are adjustable.
 - Save and reopen the annotated score.
 - Export a clearly laid-out annotated PDF with its legend for printing.
 - Clear identification of the source, selected part/segment, simplification,
