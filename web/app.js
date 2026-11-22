@@ -99,9 +99,11 @@ function lightNote(id) {
 }
 function drawStaff() {
   const playing = lastLit?.dataset.note;
+  const focused = document.activeElement?.dataset.note;
   nodes = renderScore(score, $("notation"), select, 1.45, $("showBows").checked ? bows : null);
   lightNote(playing);
   nodes.get(selected)?.classList.add("selected");
+  if (focused) nodes.get(focused)?.focus({ preventScroll: true });
 }
 function cardBar() {
   return Math.max(1, Math.min(score.bars.length, Math.trunc(+$("cardBar").value) || 1));
@@ -257,7 +259,23 @@ function inspector(open) {
   $("workspace").classList.toggle("with-tools", open);
   $("tools").setAttribute("aria-expanded", String(open));
 }
+function closeTools() {
+  inspector(false);
+  (nodes.get(selected) || $("tools")).focus({ preventScroll: true });
+}
+$("closeTools").onclick = closeTools;
 $("tools").onclick = () => inspector($("inspector").hidden);
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || event.defaultPrevented || $("dialog").open) return;
+  const picker = [$("pieces"), $("keys")].find(panel => panel.open);
+  if (picker) {
+    picker.open = false;
+    picker.querySelector("summary").focus();
+  } else if (!$("inspector").hidden) {
+    closeTools();
+  } else return;
+  event.preventDefault();
+});
 function transpose(d, key) {
   halt();
   history.push(structuredClone(score));
@@ -744,12 +762,7 @@ for (const [id, other] of [["pieces", "keys"], ["keys", "pieces"]]) {
     if (id === "pieces") showSavedChoices();
     else halt();
   };
-  picker.onkeydown = (e) => {
-    if (e.key === "Escape") {
-      picker.open = false;
-      picker.querySelector("summary").focus();
-    }
-  };
+
 }
 document.addEventListener("pointerdown", (e) => {
   for (const id of ["pieces", "keys"])

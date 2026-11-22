@@ -359,7 +359,11 @@ try {
   await studyNotes.nth(1).click();
   assert.equal(await page.inputValue("#bowMode"), "up");
   assert.equal(await studyNotes.nth(1).getAttribute("data-stroke"), await studyNotes.nth(2).getAttribute("data-stroke"));
-  await page.click("#tools");
+  await page.focus("#bowMode");
+  await page.keyboard.press("Escape");
+  assert.ok(await page.locator("#inspector").isHidden());
+  await page.waitForTimeout(200); // The staff reflows to its full width.
+  assert.equal(await page.evaluate(() => document.activeElement?.dataset.note), await studyNotes.nth(1).getAttribute("data-note"));
   await page.uncheck("#count");
   await page.click("#play");
   await page.waitForFunction(() => document.querySelectorAll(".bow-playing").length === 2);
