@@ -21,6 +21,31 @@ class ScoreImport(unittest.TestCase):
         )
         self.assertTrue(any("Repeated" in s for s in notes))
 
+    def test_bow_directions_and_string_slurs_survive_musicxml(self):
+        from music21 import articulations, converter, instrument, spanner
+        from music21.musicxml.m21ToXml import GeneralObjectExporter
+
+        for instr in [instrument.Violin(), instrument.Piano()]:
+            with self.subTest(instrument=instr.instrumentName):
+                part = stream.Part()
+                part.insert(0, instr)
+                notes = [note.Note(p) for p in ("D4", "E4", "F#4", "G4")]
+                notes[0].articulations.append(articulations.UpBow())
+                m = stream.Measure(number=1)
+                m.timeSignature = meter.TimeSignature("4/4")
+                m.append(notes)
+                part.append(m)
+                part.insert(0, spanner.Slur(notes[0], notes[2]))
+                source = converter.parseData(GeneralObjectExporter(part).parse(), format="musicxml")
+                bars, _, _ = normalize(source.parts[0])
+                events = bars[0]["events"]
+                self.assertEqual(events[0]["sourceBow"], "up")
+                if isinstance(instr, instrument.Violin):
+                    self.assertEqual(events[1]["sourceJoin"], events[0]["id"])
+                    self.assertEqual(events[2]["sourceJoin"], events[1]["id"])
+                else:
+                    self.assertFalse(any("sourceJoin" in e for e in events))
+
     def test_tie_and_overlapping_voice(self):
         from music21 import tie
 

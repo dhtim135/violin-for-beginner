@@ -63,8 +63,7 @@ export function signature(key) {
     ),
   );
 }
-export function abcPitch(p, accidentals, keySignature) {
-  if (p === null) return "z";
+function spelling(p, keySignature) {
   // Prefer diatonic spellings, then chromatic spellings consistent with the key.
   const flat = Object.values(keySignature).includes(-1);
   const variants = [];
@@ -78,8 +77,23 @@ export function abcPitch(p, accidentals, keySignature) {
     variants.push({ letter, alter, base, cost });
   }
   const { letter, alter, base } = variants.sort((a, b) => a.cost - b.cost)[0];
-  const octave = (p - base - alter) / 12 - 1,
-    id = letter + octave;
+  return { letter, alter, octave: (p - base - alter) / 12 - 1 };
+}
+export function writtenPitch(p, key) {
+  const { letter, alter } = spelling(p, signature(key));
+  return letter + (alter === 1 ? "♯" : alter === -1 ? "♭" : "");
+}
+export function scalePitches(key, lowest) {
+  if (!key || !keyOptions(key.endsWith("m") ? "minor" : "major").includes(key)) return [];
+  const starts = Array.from({ length: 17 }, (_, i) => 55 + i).filter(p => p % 12 === pc(key));
+  const start = starts.sort((a, b) => Math.abs(a - lowest) - Math.abs(b - lowest))[0];
+  const offsets = key.endsWith("m") ? [0, 2, 3, 5, 7, 8, 10, 12] : [0, 2, 4, 5, 7, 9, 11, 12];
+  return offsets.map(offset => start + offset);
+}
+export function abcPitch(p, accidentals, keySignature) {
+  if (p === null) return "z";
+  const { letter, alter, octave } = spelling(p, keySignature);
+  const id = letter + octave;
   const before = accidentals[id] ?? keySignature[letter] ?? 0;
   accidentals[id] = alter;
   return (

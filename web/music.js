@@ -1,6 +1,6 @@
 import { abcPitch, signature } from "./keys.js";
 // Stored pitch is MIDI. Labels are first-position string/finger placements.
-const strings = [
+export const strings = [
   ["G", 55],
   ["D", 62],
   ["A", 69],
@@ -113,7 +113,7 @@ function eighthTriplets(events) {
   }
   return members;
 }
-function scoreAbc(score) {
+function scoreAbc(score, bows) {
   const signatureForScore = signature(score.key);
   let meter = score.bars[0].meter;
   let music = "";
@@ -137,9 +137,15 @@ function scoreAbc(score) {
       if (triplets.get(i) === 0) music += "(3";
       const ticks = triplets.has(i) ? 48 : note.ticks;
       const g = gcd(ticks, 96);
+      const stroke = bows?.get(note.id)?.stroke;
+      if (stroke?.ids[0] === note.id) {
+        if (stroke.slurred) music += "(";
+        music += "!" + stroke.direction + "bow!";
+      }
       music += abcPitch(note.pitch, accidentals, signatureForScore);
       if (ticks !== 96) music += ticks / g + (g === 96 ? "" : "/" + 96 / g);
       if (note.tie) music += "-";
+      if (stroke?.slurred && stroke.ids.at(-1) === note.id) music += ")";
       elapsed += note.ticks;
 
       // ABC's lyric row measures each label and reserves space under its note.
@@ -163,12 +169,12 @@ function scoreAbc(score) {
   ].join("\n");
 }
 
-export function renderScore(score, root, select, scale = 1) {
+export function renderScore(score, root, select, scale = 1, bows = null) {
   root.replaceChildren();
   const nodes = new Map();
   if (!score.bars.length) return nodes;
   const staffWidth = Math.max(195, root.clientWidth / scale - 20);
-  const [visual] = ABCJS.renderAbc(root, scoreAbc(score), {
+  const [visual] = ABCJS.renderAbc(root, scoreAbc(score, bows), {
     responsive: "resize",
     staffwidth: staffWidth,
     wrap: { minSpacing: 1.12 },
@@ -217,13 +223,16 @@ export function renderScore(score, root, select, scale = 1) {
     }
     nodes.set(n.id, svgEl);
     svgEl.dataset.note = n.id;
+    const bow = bows?.get(n.id);
+    if (bow) svgEl.dataset.stroke = bow.stroke.ids[0];
     svgEl.setAttribute("tabindex", "0");
     svgEl.setAttribute("role", "button");
     svgEl.setAttribute(
       "aria-label",
       pitchName(n.pitch) +
         " · " +
-        (n.pitch == null ? "Rest" : fingerLabel(n.fingering)),
+        (n.pitch == null ? "Rest" : fingerLabel(n.fingering)) +
+        (bow ? " · " + bow.stroke.direction + " bow · " + bow.origin : ""),
     );
     svgEl.onclick = () => select(n.id);
     svgEl.onkeydown = (e) => {
@@ -265,6 +274,7 @@ export function rebar(score, events) {
       const take = Math.min(left, remaining);
       out.at(-1).events.push({
         ...n,
+        ...(remaining === n.ticks ? {} : { attackId: n.attackId || n.id, bowEdit: null, sourceBow: null, sourceJoin: null }),
         id: remaining === n.ticks ? n.id : crypto.randomUUID(),
         ticks: take,
         tie: n.pitch !== null && (remaining > take || n.tie),
@@ -302,6 +312,7 @@ export function spellRhythm(score) {
         left -= ticks;
         pieces.push({
           ...n,
+          ...(pieces.length ? { attackId: n.attackId || n.id, bowEdit: null, sourceBow: null, sourceJoin: null } : {}),
           id: pieces.length ? crypto.randomUUID() : n.id,
           ticks,
           tie: n.pitch !== null && (left > 0 || n.tie),

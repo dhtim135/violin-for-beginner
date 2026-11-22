@@ -91,3 +91,38 @@ test("D to A stays playable and key signatures spell naturals, flats and sharps"
   assert.equal(abcPitch(70, {}, signature("F")), "B");
   assert.equal(abcPitch(65, {}, signature("F#")), "E");
 });
+
+test("a bow follows ties and explicit slurs, honours edits and restarts after rests", async () => {
+  const { bowPlan } = await import("../web/bowing.js");
+  const s = line([62, 62, 64, 66, null, 62, 62]);
+  const notes = allEvents(s);
+  notes[0].sourceBow = "up";
+  notes[0].tie = true;
+  notes[2].sourceJoin = notes[1].id;
+  const plan = bowPlan(s);
+  assert.deepEqual(plan.get("0").stroke.ids, ["0", "1", "2"]);
+  assert.equal(plan.get("2").stroke.direction, "up");
+  assert.equal(plan.get("3").stroke.direction, "down");
+  assert.equal(plan.has("4"), false);
+  assert.equal(plan.get("5").stroke.direction, "down");
+  assert.equal(plan.get("6").stroke.direction, "up");
+  notes[2].bowEdit = {};
+  assert.deepEqual(bowPlan(s).get("0").stroke.ids, ["0", "1"]);
+  notes[2].bowEdit = { joinFrom: notes[0].id };
+  assert.deepEqual(bowPlan(s).get("2").stroke.ids, ["2"]);
+});
+
+test("a bow join survives a tied rhythm split and scale spellings follow the key", async () => {
+  const { bowPlan } = await import("../web/bowing.js");
+  const { scalePitches, writtenPitch } = await import("../web/keys.js");
+  const { spellRhythm } = await import("../web/music.js");
+  const s = line([66, 67]);
+  s.notices = [];
+  allEvents(s)[0].ticks = 240;
+  allEvents(s)[1].bowEdit = { joinFrom: "0" };
+  spellRhythm(s);
+  assert.equal(bowPlan(s).get("0").stroke.ids.length, 3);
+  assert.deepEqual(scalePitches("D", 62).map(p => writtenPitch(p, "D")),
+    ["D", "E", "F♯", "G", "A", "B", "C♯", "D"]);
+  assert.equal(writtenPitch(65, "F#"), "E♯");
+});

@@ -1,7 +1,7 @@
 """Turn a source part into a single, editable violin line. Durations are quarter-note ticks."""
 
 from uuid import uuid4
-from music21 import chord, converter, note, stream, repeat
+from music21 import articulations, chord, converter, instrument, note, repeat, spanner, stream
 
 TPQ = 96
 
@@ -69,6 +69,8 @@ def normalize(part):
     except Exception:
         notices.add("Repeat navigation needs review. Measures appear in source order.")
     bars = []
+    line = []
+    source_indices = {}
     meter = "4/4"
     for m in part.getElementsByClass(stream.Measure):
         if m.timeSignature:
@@ -90,6 +92,7 @@ def normalize(part):
                         end,
                         int(p.midi),
                         getattr(obj.tie, "type", "") in ("start", "continue"),
+                        obj,
                     )
                 )
         length = round(float(m.highestTime) * TPQ) or round(
@@ -110,20 +113,41 @@ def normalize(part):
                 spans[-1][2] |= ambiguous
             else:
                 spans.append([selected, b - a, ambiguous])
-        notes = [
-            event(
-                s[2] if s else None,
-                ticks,
-                tie=bool(s and s[3]),
-                flag="Check overlapping voices" if amb else "",
+        notes = []
+        for sound, ticks, ambiguous in spans:
+            item = event(
+                sound[2] if sound else None, ticks,
+                tie=bool(sound and sound[3]),
+                flag="Check overlapping voices" if ambiguous else "",
             )
-            for s, ticks, amb in spans
-        ]
+            if sound:
+                obj = sound[4]
+                source_indices[id(obj)] = len(line)
+                for mark in obj.articulations:
+                    if isinstance(mark, (articulations.UpBow, articulations.DownBow)):
+                        item["sourceBow"] = "up" if isinstance(mark, articulations.UpBow) else "down"
+            line.append(item)
+            notes.append(item)
         bars.append(dict(meter=meter, events=notes))
     if not any(n["pitch"] is not None for b in bars for n in b["events"]):
         raise ValueError(
             "This part contains no readable pitched notes. Try another part."
         )
+    # On a bowed string part a simple slur suggests one stroke. Vocal and
+    # keyboard phrase marks have a different meaning in a violin arrangement.
+    bowed_strings = (instrument.Violin, instrument.Viola, instrument.Violoncello, instrument.Contrabass)
+    if isinstance(part.getInstrument(returnDefault=False), bowed_strings):
+        for slur in part.recurse().getElementsByClass(spanner.Slur):
+            start = source_indices.get(id(slur.getFirst()))
+            end = source_indices.get(id(slur.getLast()))
+            if start is None or end is None or start >= end:
+                continue
+            section = line[start:end + 1]
+            if any(item["pitch"] is None or item["flag"] for item in section):
+                notices.add("Check source slurs across rests or overlapping voices.")
+                continue
+            for prev, item in zip(section, section[1:]):
+                item["sourceJoin"] = prev["id"]
     marks = part.metronomeMarkBoundaries()
     tempo = marks[0][2].getQuarterBPM() if marks else 90
     if len(marks) > 1:
