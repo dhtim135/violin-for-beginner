@@ -15,9 +15,13 @@
       <span><strong>↑</strong> High finger</span>
       <span><strong>Range?</strong> Outside first position</span>
     </div>
+    <p class="bow-guide" id="bowGuide" hidden>⊓ Down bow · ∨ Up bow · A slur groups notes in one bow. Bowing includes practice suggestions.</p>
     <div id="score"></div>
     <p id="notices"></p>
+    <section id="cardPage" hidden><h2>Practice card · 指法与弓法</h2><p id="cardTitle"></p><div id="cardContent" class="practice-content"></div></section>
     <script type="module">
+      import { bowPlan } from "$assets/bowing.js";
+      import { renderCard } from "$assets/practice-card.js";
       import { renderScore } from "$assets/music.js";
       import { songTitle } from "$assets/title.js";
       import { keyLabel } from "$assets/keys.js";
@@ -33,7 +37,15 @@
           .join(" · ");
         document.querySelector("#notices").textContent =
           score.notices.join(" ");
-        renderScore(score, document.querySelector("#score"), () => {});
+        const options = score.printOptions || {};
+        const bows = bowPlan(score);
+        document.querySelector("#bowGuide").hidden = !options.bows;
+        renderScore(score, document.querySelector("#score"), () => {}, 1, options.bows ? bows : null);
+        document.querySelector("#cardPage").hidden = !options.card;
+        if (options.card) {
+          document.querySelector("#cardTitle").replaceChildren(songTitle(score), " · " + keyLabel(score.key));
+          renderCard(document.querySelector("#cardContent"), score, bows, Math.max(0, Math.min(score.bars.length, Math.trunc(options.bar) || 1) - 1), options.scale);
+        }
       };
     </script>
   </body>

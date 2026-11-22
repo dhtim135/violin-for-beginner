@@ -33,6 +33,12 @@ The browser chooses fingerings by minimizing a cost across the phrase. Each play
 
 `web/player.js` schedules the score in Web Audio, respects ties and highlights notes against the audio clock. Pause suspends the audio clock and stops the scheduling and highlight timers. Resume restarts them on the same timeline, preserving the remaining duration of a note, count-in or loop. It uses a synthesized demonstration tone. `web/app.js` manages selection, editing, audition, undo, save/reopen and job polling. The PDF route sends the current score snapshot to a local headless Chrome process that uses `web/print.html` and the same notation renderer, including unsaved edits.
 
+## Bowing
+
+`studio/score.py` reads explicit directions into `sourceBow` and records simple bowed-string slurs as `sourceJoin` links to the preceding event. The browser keeps user overrides in `bowEdit`. `web/bowing.js` derives strokes on demand, alternating directions between attacks and starting down after rests. A tie continues the stroke. Each note created by splitting a duration retains the attack identity for join lookup. Scores saved before these fields existed get suggestions on opening.
+
+The workspace and print view use the same stroke plan and ABC decorations. `web/practice-card.js` places the current finger assignments on a semitone grid and groups the selected bar by stroke. PDF options travel with the export snapshot. Playback uses the stroke groups for visual highlighting and retains the synthesized pitch demonstration.
+
 ## Persistence and lifecycle
 
 The library transaction updates the latest score and inserts its revision snapshot atomically. The client provides the expected revision and gets HTTP 409 on stale updates. Reopening loads the latest revision. UI undo covers recent edits in the active tab. The revisions table also retains saved snapshots.

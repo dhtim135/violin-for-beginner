@@ -538,3 +538,34 @@ button:focus-visible,
     left: 0;
   }
 }
+
+.export-actions { display: grid; gap: 7px; justify-items: end; }
+.export-actions label, .card-options { font-size: 14px; }
+#practice { border-block: 1px solid var(--line); margin: 0 0 16px; padding: 10px 0; }
+#practice summary { font-size: 16px; }
+.card-options { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin: 14px 0; }
+#cardBar { width: 5em; }
+.practice-content { max-width: 790px; margin-bottom: 16px; }
+.practice-content h3 { font-size: 22px; margin: 20px 0 10px; }
+.fingerboard { width: 100%; table-layout: fixed; border-collapse: collapse; text-align: center; }
+.fingerboard th { font-weight: 600; color: var(--muted); padding: 5px 0; }
+.fingerboard td { position: relative; height: 35px; }
+.fingerboard td::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid #93a397; }
+.fingerboard td:nth-child(2) { border-right: 3px solid #89968b; }
+.fingerboard td span { position: relative; display: inline-block; min-width: 27px; padding: 3px; background: #f0f5eb; border: 1px solid #456c51; border-radius: 16px; font-weight: 600; }
+.card-caption, .bow-guide, .scale-line { color: var(--muted); line-height: 1.6; }
+.bow-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+.bow-group { padding: 5px 6px; display: flex; flex-wrap: wrap; gap: 6px 12px; }
+.bow-group strong { flex-basis: 100%; color: var(--green); padding-bottom: 6px; position: relative; border-bottom: 1.5px solid currentColor; }
+.bow-group small { display: block; font-size: 12px; letter-spacing: 0; }
+#bowTools { border: 1px solid var(--line); margin: 16px 0 0; padding: 8px; }
+#bowTools p { margin: 4px 0; }
+.staff .bow-playing { fill: #82592b; color: #82592b; }
+#cardPage { break-before: page; }
+.bow-group[data-direction] strong::after { content: ""; position: absolute; right: 0; bottom: -3.5px; border: solid currentColor; border-width: 1.5px 1.5px 0 0; padding: 2px; transform: rotate(45deg); }
+.bow-group[data-direction="up"] strong::after { right: auto; left: 0; transform: rotate(-135deg); }
+
+@media screen and (max-width: 520px) {
+  .fingerboard thead th:first-child, .fingerboard thead th:nth-child(2) { width: 14%; }
+  .fingerboard thead th { font-size: 13px; }
+}

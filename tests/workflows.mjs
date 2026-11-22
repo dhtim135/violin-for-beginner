@@ -338,6 +338,48 @@ try {
       .isEnabled(),
     true,
   );
+  await page.goto(url + "/?piece=ode-to-joy");
+  await page.waitForSelector("[data-note]");
+  await page.check("#showBows");
+  await page.click("#practice summary");
+  await page.check("#fullScale");
+  assert.match(await page.textContent(".scale-line"), /F♯/);
+  assert.equal(await page.locator(".fingerboard tbody tr").count(), 4);
+  assert.equal(await page.locator(".bow-group").count(), 4);
+  const odeNotes = page.locator("#notation [data-note]");
+  await odeNotes.nth(1).click();
+  await page.click("#joinBow");
+  assert.equal(await odeNotes.nth(1).getAttribute("data-stroke"), await odeNotes.nth(2).getAttribute("data-stroke"));
+  assert.equal(await page.locator(".bow-group").count(), 3);
+  await page.selectOption("#bowMode", "up");
+  await page.click("#save");
+  await page.waitForFunction(() => document.querySelector("#save").textContent.includes("Saved"));
+  await page.click("#library");
+  await page.locator("#dialog .sourceitem").filter({ hasText: "Ode to Joy" }).first().click();
+  await odeNotes.nth(1).click();
+  assert.equal(await page.inputValue("#bowMode"), "up");
+  assert.equal(await odeNotes.nth(1).getAttribute("data-stroke"), await odeNotes.nth(2).getAttribute("data-stroke"));
+  await page.click("#tools");
+  await page.uncheck("#count");
+  await page.click("#play");
+  await page.waitForFunction(() => document.querySelectorAll(".bow-playing").length === 2);
+  await page.click("#resetPlayback");
+  assert.equal(await page.locator(".bow-playing").count(), 0);
+  await page.click("#key");
+  await page.locator('#keyPanel button').filter({ hasText: /^A major$/ }).click();
+  assert.match(await page.textContent(".scale-line"), /G♯/);
+  await page.click("#undo");
+  await page.check("#printCard");
+  const odeDownload = page.waitForEvent("download");
+  await page.click("#export");
+  await (await odeDownload).saveAs(dir + "/ode-bowing.pdf");
+  const cardText = execFileSync("pdftotext", ["-layout", dir + "/ode-bowing.pdf", "-"], { encoding: "utf8" });
+  assert.match(cardText, /Right hand · Bar 1/);
+  assert.match(cardText, /One-octave scale/);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator("#practice").scrollIntoViewIfNeeded();
+  assert.ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth));
+  await page.screenshot({ path: dir + "/ode-card-mobile.png" });
   assert.deepEqual(errors, []);
   console.log("All browser workflows passed. Artifacts: " + dir);
 } finally {

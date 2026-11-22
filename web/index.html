@@ -39,10 +39,10 @@
           <h1 id="title">$title</h1>
           <div id="subtitle"></div>
         </div>
-        <div class="actions">
+        <div class="export-actions"><div class="actions">
           <button id="save">Save score</button
           ><button id="export">Download PDF</button>
-        </div>
+        </div><label><input type="checkbox" id="printCard" /> Include practice card in PDF</label></div>
       </section>
       <section class="transport">
         <div class="playbackButtons">
@@ -68,6 +68,7 @@
             </form>
           </section>
         </details>
+        <label><input type="checkbox" id="showBows" /> Show bowing</label>
         <label><input type="checkbox" id="count" checked /> Count-in</label
         ><label><input type="checkbox" id="loop" /> Loop bars</label
         ><span id="range" hidden
@@ -90,6 +91,15 @@
               Score tools
             </button>
           </div>
+          <details id="practice">
+            <summary>Practice card · 指法与弓法</summary>
+            <div class="card-options">
+              <label>Preview bar <input id="cardBar" type="number" value="1" min="1" /></label>
+              <label><input type="checkbox" id="fullScale" /> Include full scale</label>
+            </div>
+            <div id="cardContent" class="practice-content"></div>
+          </details>
+          <p class="bow-guide" id="bowGuide" hidden>⊓ Down bow 下弓 · ∨ Up bow 上弓 · A slur groups notes in one bow. Select a note to check or edit its bowing.</p>
           <div id="notation"></div>
           <div class="legend" aria-label="Violin fingering guide">
             <span><strong>G · D · A · E</strong> Open strings</span>
@@ -120,6 +130,16 @@
               ><button type="button" id="remove">Delete</button>
             </div>
             <button type="button" id="merge">Merge with next</button>
+            <fieldset id="bowTools" hidden><legend>Right hand · Bowing</legend>
+              <p id="bowInfo"></p>
+              <label>Start this note<select id="bowMode">
+                <option value="">Use source or suggestion</option>
+                <option value="down">Down bow</option><option value="up">Up bow</option>
+                <option value="separate">Separate bow</option>
+                <option value="join">Continue previous bow</option>
+              </select></label>
+              <button type="button" id="joinBow">One bow with next note</button>
+            </fieldset>
           </form>
           <hr />
 

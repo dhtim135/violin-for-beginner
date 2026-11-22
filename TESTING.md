@@ -20,6 +20,8 @@ The browser suite generates its own 24-bar study in the temporary local library.
 
 The 20 *Baby’s Opera* editions were opened from the piece picker, played and exported individually. Their suggested fingerings cover G, D, A and E across the collection. Catalogue search also resolves the collection name and Chinese title aliases.
 
+The bowing checks cover source up-bows, violin versus piano slurs in MusicXML, tied durations, rests, group edits and scale spelling. The browser joins two notes in *Ode to Joy*, changes and saves a bow direction, reopens the edition, checks playback highlighting and transposition, and inspects the PDF card and mobile viewport.
+
 ## Quality measurements
 
 The M0 recognizer recovered all expected pitch/rest and duration pairs in 12 simple generated inputs. On three more complex voice-and-piano PDFs, the default recognized part matched 11/16, 26/38 and 4/30 expected events respectively. Part selection and source comparison matter. These results cover the measured excerpts. [M0 findings](experiments/m0/FINDINGS.md)

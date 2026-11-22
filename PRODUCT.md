@@ -95,6 +95,12 @@ excerpts by name. Each edition identifies its source and any changes to the melo
 
 The public catalogue contains original studies, beginner arrangements of public-domain melodies and documented third-party editions. Each new public score needs a redistribution and adaptation basis for its particular edition. Musicians can import other repertoire locally when they have permission to use it. The application uses PolyForm Noncommercial 1.0.0, including its permission for use by educational institutions. [License](LICENSE)
 
+## Bowing and the piece-specific practice card
+
+Players can show bow directions above the staff while retaining finger labels below it. They can join adjacent notes in one stroke, change the direction, undo and save. Playback highlights both the sounding event and the stroke. The card shows assigned finger positions on all four strings, optionally adds a one-octave scale, and diagrams the strokes for a chosen bar. Both the printed overlay and the appended PDF card are optional.
+
+Preserve explicit source bow directions and simple slurs on identified bowed-string parts. Unmarked passages and audio drafts use editable practice suggestions. Recognized marks can be checked against the uploaded original.
+
 ## Version consistency
 
 Notation, finger labels, playback, saved content, and exported PDF must represent

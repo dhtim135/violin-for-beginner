@@ -11,6 +11,8 @@
 | M4 · Audio draft | Segment selection, tempo estimation/override, predominant-line suggestion, sixteenth-note quantization, clip audition and corrections. | Uploaded WAV exercised end to end. Five paired performances evaluated independently of the UI. Dense accompaniment remains experimental. |
 | M5 · Local integration | Startup/setup scripts, isolated browser tests, local storage, sample inputs, print inspection and operating guides. | [Verification record](TESTING.md) and [user instructions](INSTRUCTIONS.md). |
 
+The score workspace also includes editable bow directions and slurs, playback highlighting by stroke and a printable, transposition-aware practice card. *Ode to Joy* is the reference exercise.
+
 ## Acceptance boundary
 
 Supported examples have a working path through export. Search availability depends on an edition in the catalogue. Recognition produces a reviewable draft. Pitches beyond the first-position range need correction or an explicit transposition. The measured audio results do not establish accuracy for arbitrary songs.

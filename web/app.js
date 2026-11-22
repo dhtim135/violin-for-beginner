@@ -1,3 +1,5 @@
+import { bowPlan } from "./bowing.js";
+import { renderCard } from "./practice-card.js";
 import { songTitle } from "./title.js";
 import { keyOptions, keyLabel, intervalFor, shiftedKey } from "./keys.js";
 import {
@@ -64,6 +66,8 @@ let score,
   playbackState = "idle",
   playbackRequest = 0,
   lastLit,
+  bows = new Map(),
+  litStroke = [],
   dialogVersion = 0;
 function setPlaybackState(state) {
   playbackState = state;
@@ -75,8 +79,40 @@ function halt() {
   stop();
   setPlaybackState("idle");
   $("play").removeAttribute("aria-busy");
-  lastLit?.classList.remove("playing");
+  lightNote(null);
 }
+function lightNote(id) {
+  lastLit?.classList.remove("playing");
+  for (const node of litStroke) node.classList.remove("bow-playing");
+  litStroke = [];
+  if ($("showBows").checked) {
+    for (const member of bows.get(id)?.stroke.ids || []) {
+      const node = nodes.get(member);
+      if (node) {
+        node.classList.add("bow-playing");
+        litStroke.push(node);
+      }
+    }
+  }
+  lastLit = nodes.get(id);
+  lastLit?.classList.add("playing");
+}
+function drawStaff() {
+  const playing = lastLit?.dataset.note;
+  nodes = renderScore(score, $("notation"), select, 1.45, $("showBows").checked ? bows : null);
+  lightNote(playing);
+  nodes.get(selected)?.classList.add("selected");
+}
+function cardBar() {
+  return Math.max(1, Math.min(score.bars.length, Math.trunc(+$("cardBar").value) || 1));
+}
+function drawCard() {
+  if ($("practice").open) renderCard($("cardContent"), score, bows, cardBar() - 1, $("fullScale").checked);
+}
+$("practice").ontoggle = drawCard;
+$("fullScale").onchange = drawCard;
+$("cardBar").onchange = () => { $("cardBar").value = cardBar(); drawCard(); };
+$("showBows").onchange = () => draw();
 function accept(data, id = null, rev = 0, initial = false) {
   halt();
   score = data;
@@ -104,6 +140,7 @@ function accept(data, id = null, rev = 0, initial = false) {
     $("pieces").open = false;
     $("keys").open = false;
   }
+  $("cardBar").value = 1;
   $("first").value = 1;
   $("last").value = score.bars.length;
   $("feedback").textContent = "";
@@ -126,7 +163,13 @@ function draw() {
     Number($("last").value) || score.bars.length,
   );
   $("first").value = Math.min(+$("first").value, +$("last").value);
-  nodes = renderScore(score, $("notation"), select, 1.45);
+  bows = bowPlan(score);
+  $("bowGuide").hidden = !$("showBows").checked;
+  $("cardBar").max = score.bars.length;
+  $("cardBar").value = cardBar();
+  $("fullScale").disabled = !score.key;
+  drawStaff();
+  drawCard();
   showEditor();
   metadata();
 }
@@ -361,8 +404,38 @@ function showEditor() {
   $("duration").value = n.ticks;
   fillFingers(n.pitch);
   $("hear").disabled = n.pitch === null;
-  $("merge").disabled = n === allEvents(score).at(-1);
+  const events = allEvents(score);
+  const index = events.indexOf(n);
+  $("merge").disabled = index === events.length - 1;
+  const prev = events[index - 1], next = events[index + 1], bow = bows.get(n.id);
+  $("bowTools").hidden = !$("showBows").checked || !bow;
+  if (bow) {
+    $("bowInfo").textContent = bow.origin + " · " + (bow.stroke.ids[0] === n.id ? "Start " : "Continue ") + bow.stroke.direction + " bow";
+    $("bowMode").value = n.bowEdit?.direction || (n.bowEdit?.joinFrom ? "join" : n.bowEdit ? "separate" : "");
+    $("bowMode").disabled = bow.tied;
+    $("bowMode").querySelector('[value="join"]').disabled = !prev || prev.pitch === null;
+    $("joinBow").disabled = !next || next.pitch === null || n.tie || bows.get(next.id)?.stroke === bow.stroke;
+  }
 }
+function changeBow(note, value, prev) {
+  halt();
+  history.push(structuredClone(score));
+  if (history.length > 20) history.shift();
+  if (!value) delete note.bowEdit;
+  else if (value === "join") note.bowEdit = { joinFrom: prev.id };
+  else note.bowEdit = value === "separate" ? {} : { direction: value };
+  dirty = true;
+  draw();
+  message("Bowing edited · save to keep your changes.");
+}
+$("bowMode").onchange = () => {
+  const notes = allEvents(score), n = current();
+  changeBow(n, $("bowMode").value, notes[notes.indexOf(n) - 1]);
+};
+$("joinBow").onclick = () => {
+  const notes = allEvents(score), n = current();
+  changeBow(notes[notes.indexOf(n) + 1], "join", n);
+};
 const newPitch = () => ($("pitch").value === "rest" ? null : +$("pitch").value);
 $("pitch").onchange = () => fillFingers(newPitch());
 function edit(operation) {
@@ -389,6 +462,7 @@ function edit(operation) {
   }
   if (operation === "insert") {
     const copy = { ...n, id: crypto.randomUUID(), flag: "", tie: false };
+    for (const key of ["bowEdit", "sourceBow", "sourceJoin", "attackId"]) delete copy[key];
     events.splice(index + 1, 0, copy);
     selected = copy.id;
   }
@@ -486,9 +560,7 @@ $("play").onclick = guard(async () => {
         last,
       },
       (id) => {
-        lastLit?.classList.remove("playing");
-        lastLit = nodes.get(id);
-        lastLit?.classList.add("playing");
+        lightNote(id);
         if (
           lastLit &&
           (lastLit.getBoundingClientRect().bottom > innerHeight ||
@@ -530,7 +602,7 @@ $("export").onclick = guard(async () => {
   message("Preparing PDF…");
   try {
     const title = score.title;
-    const r = await fetch("/api/pdf", json(score));
+    const r = await fetch("/api/pdf", json({ ...score, printOptions: { bows: $("showBows").checked, card: $("printCard").checked, bar: cardBar(), scale: $("fullScale").checked } }));
     if (!r.ok) throw Error((await r.json()).detail);
     const url = URL.createObjectURL(await r.blob()),
       a = elem("a");
@@ -856,8 +928,7 @@ new ResizeObserver((entries) => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       if (score) {
-        nodes = renderScore(score, $("notation"), select, 1.45);
-        nodes.get(selected)?.classList.add("selected");
+        drawStaff();
       }
     }, 120);
   }

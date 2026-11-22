@@ -48,6 +48,14 @@ The score opens at full width with enlarged staff notation and finger labels. Se
 
 Click **Key** beside **Speed**, then click a named key in the panel to play in another key, such as D major or A major. The app moves the entire melody together and chooses an octave that keeps as many notes as possible in first position. It updates the signature, finger labels, playback and PDF. **Undo edit** restores the previous arrangement and fingerings. **Save score** keeps the new key. If the key is unknown, identify the source tonic and mode first. Transposing a minor melody preserves its minor mode.
 
+## Bowing and the practice card
+
+Open **Switch piece → Ode to Joy 欢乐颂**, then turn on **Show bowing**. The square-topped mark means down bow (下弓, frog to tip). The V means up bow (上弓, tip to frog). Finger arrows below the staff still mean low or high placement. During playback, green follows the current note and ochre marks the other notes in the same stroke.
+
+Select a note to see whether its bow comes from source notation, a suggestion or your edit. Choose **One bow with next note** to slur the two notes together. Choose **Separate bow** on the second note to split the stroke, or **Use source or suggestion** to clear that note's override. A tie holds the same pitch through its written durations. Save the score to keep bow edits.
+
+Open **Practice card · 指法与弓法** above the staff. The four-string diagram shows the fingerings used in this arrangement. **Include full scale** adds a one-octave warm-up in the current key (natural minor for a minor key). Choose **Preview bar** for the right-hand diagram. **Include practice card in PDF** appends the current card to the score. **Show bowing** controls whether marks appear on the printed staff.
+
 ## Read and correct a draft
 
 - Click **Pause** to hold your place and **Resume** to continue, including during the count-in. **Reset** stops playback and returns the next **Play** to the first bar of the piece or selected loop. Playback follows the highlighted note and finger label. Choose speed, count-in and optional inclusive start/end bars before pressing Play. Changing these controls stops playback.
