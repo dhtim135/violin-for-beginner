@@ -31,6 +31,9 @@ export function fingerLabel(f) {
     ? f.string + (f.finger || "") + (f.placement ? " " + f.placement : "")
     : "Check range";
 }
+export function shortFinger(f) {
+  return f ? fingerLabel(f).replace(" low", "↓").replace(" high", "↑") : "Range?";
+}
 export function suggest(score) {
   // Rank entire paths. User choices restrict the candidate set at that note.
   let paths = [],
@@ -144,9 +147,13 @@ function scoreAbc(score, bows) {
       const ticks = triplets.has(i) ? note.ticks * 1.5 : note.ticks;
       const g = gcd(ticks, 96);
       const stroke = bows?.get(note.id)?.stroke;
-      if (stroke?.ids[0] === note.id) {
-        if (stroke.slurred) music += "(";
-        music += "!" + stroke.direction + "bow!";
+      if (stroke) {
+        const start = stroke.ids[0] === note.id;
+        if (start && stroke.slurred) music += "(";
+        const direction = stroke.direction === "down" ? "Down" : "Up";
+        const mark = start ? (stroke.direction === "down" ? "⊓" : "∨") : "↳";
+        // ABC's centered chord text reserves horizontal space for each bow cue.
+        music += '"' + mark + ' ' + direction + '"';
       }
       music += abcPitch(note.pitch, accidentals, signatureForScore);
       if (ticks !== 96) music += ticks / g + (g === 96 ? "" : "/" + 96 / g);
@@ -157,11 +164,7 @@ function scoreAbc(score, bows) {
       // ABC's lyric row measures each label and reserves space under its note.
       // It automatically skips rests and remains on one baseline per system.
       if (note.pitch !== null)
-        labels.push(
-          note.fingering
-            ? fingerLabel(note.fingering).replace(" low", "↓").replace(" high", "↑")
-            : "Range?",
-        );
+        labels.push(shortFinger(note.fingering));
     }
     music += " |";
   }
@@ -192,7 +195,7 @@ export function renderScore(score, root, select, scale = 1, bows = null) {
     paddingright: 12,
     minPadding: 4,
     add_classes: true,
-    format: { vocalfont: "Helvetica 12", stretchlast: "true" },
+    format: { gchordfont: "Helvetica 9", vocalfont: "Helvetica 12", stretchlast: "true" },
   });
   // The responsive renderer leaves an inline-block around the entire tune.
   // Let the browser paginate the individual systems inside it.
@@ -230,7 +233,10 @@ export function renderScore(score, root, select, scale = 1, bows = null) {
     nodes.set(n.id, svgEl);
     svgEl.dataset.note = n.id;
     const bow = bows?.get(n.id);
-    if (bow) svgEl.dataset.stroke = bow.stroke.ids[0];
+    if (bow) {
+      svgEl.dataset.stroke = bow.stroke.ids[0];
+      svgEl.dataset.bow = (n.id === bow.stroke.ids[0] ? "Start " : "Continue ") + bow.stroke.direction + " bow";
+    }
     svgEl.setAttribute("tabindex", "0");
     svgEl.setAttribute("role", "button");
     svgEl.setAttribute(
@@ -238,7 +244,7 @@ export function renderScore(score, root, select, scale = 1, bows = null) {
       pitchName(n.pitch) +
         " · " +
         (n.pitch == null ? "Rest" : fingerLabel(n.fingering)) +
-        (bow ? " · " + bow.stroke.direction + " bow · " + bow.origin : ""),
+        (bow ? " · " + svgEl.dataset.bow + " · " + bow.origin : ""),
     );
     svgEl.onclick = () => select(n.id);
     svgEl.onkeydown = (e) => {

@@ -11,7 +11,7 @@
 | M4 · Audio draft | Segment selection, tempo estimation/override, predominant-line suggestion, sixteenth-note quantization, clip audition and corrections. | Uploaded WAV exercised end to end. Five paired performances evaluated independently of the UI. Dense accompaniment remains experimental. |
 | M5 · Local integration | Startup/setup scripts, isolated browser tests, local storage, sample inputs, print inspection and operating guides. | [Verification record](TESTING.md) and [user instructions](INSTRUCTIONS.md). |
 
-The score workspace also includes editable bow directions and slurs, playback highlighting by stroke and a printable, transposition-aware practice card. *Twinkle, Twinkle, Little Star* is the public reference exercise.
+The score workspace also includes editable bow directions and slurs, playback highlighting by stroke and a printable, transposition-aware practice card. Each note has a two-hand guide with a full violin, finger placement and bow direction. *Twinkle, Twinkle, Little Star* is the public reference exercise.
 
 ## Acceptance boundary
 

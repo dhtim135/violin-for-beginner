@@ -97,8 +97,8 @@ try {
   for (const width of [390, 1300]) {
     await page.setViewportSize({ width, height: 900 });
     await page.waitForFunction((small) => {
-      const caption = document.querySelector(".bar-range")?.textContent;
-      return small ? caption === "Bar 1" : caption?.startsWith("Bars 1–");
+      const ranges = [...document.querySelectorAll(".bar-range")].map(el => el.textContent);
+      return small ? ranges.length === 24 : ranges.some(text => text.startsWith("Bars "));
     }, width === 390);
     const layout = await page.locator("#notation").evaluate((paper) => {
       let labelCount = 0;
@@ -231,7 +231,7 @@ try {
   await page.reload();
   await page.click("#switchPiece");
   await page.locator("#savedChoices").getByRole("button", { name: /Frère Jacques.*两只老虎/ }).click();
-  await page.waitForSelector('[aria-label="A4 · D4"]');
+  await page.waitForSelector('[aria-label^="A4 · D4"]');
   assert.match(await page.textContent("#key"), /A major/);
   const d = page.waitForEvent("download");
   await page.click("#export");
@@ -340,7 +340,7 @@ try {
   );
   await page.goto(url + "/?piece=starter");
   await page.waitForSelector("[data-note]");
-  await page.check("#showBows");
+  assert.ok(await page.locator("#showBows").isChecked());
   await page.click("#practice summary");
   await page.check("#fullScale");
   assert.match(await page.textContent(".scale-line"), /F♯/);
@@ -351,6 +351,14 @@ try {
   await page.click("#joinBow");
   assert.equal(await studyNotes.nth(1).getAttribute("data-stroke"), await studyNotes.nth(2).getAttribute("data-stroke"));
   assert.equal(await page.locator(".bow-group").count(), 3);
+  const continuedId = await studyNotes.nth(2).getAttribute("data-note");
+  await page.locator('[data-preview-note="' + continuedId + '"]').click();
+  assert.match(await page.locator(".card-hands .right-cue").textContent(), /Continue up bow/);
+  assert.match(await studyNotes.nth(2).textContent(), /↳ Up/);
+  assert.equal(await page.locator(".card-hands").getAttribute("data-hand-note"), continuedId);
+  assert.equal(await page.locator(".card-hands .finger-tag").textContent(), "A");
+  assert.equal(await page.locator(".current-finger").getAttribute("data-fingering"), "A");
+  assert.match(await page.locator("#noteHands .left-cue").textContent(), /D string · open string/);
   await page.selectOption("#bowMode", "up");
   await page.click("#save");
   await page.waitForFunction(() => document.querySelector("#save").textContent.includes("Saved"));
@@ -367,6 +375,7 @@ try {
   await page.uncheck("#count");
   await page.click("#play");
   await page.waitForFunction(() => document.querySelectorAll(".bow-playing").length === 2);
+  await page.waitForFunction(() => document.querySelector(".card-hands").dataset.handNote === document.querySelector(".playing")?.dataset.note);
   await page.click("#resetPlayback");
   assert.equal(await page.locator(".bow-playing").count(), 0);
   await page.click("#key");
@@ -380,6 +389,8 @@ try {
   const cardText = execFileSync("pdftotext", ["-layout", dir + "/starter-bowing.pdf", "-"], { encoding: "utf8" });
   assert.match(cardText, /Right hand · Bar 1/);
   assert.match(cardText, /One-octave scale/);
+  assert.match(cardText, /On the violin/);
+  assert.match(cardText, /Right hand/);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator("#practice").scrollIntoViewIfNeeded();
   assert.ok(await page.evaluate(() => document.body.scrollWidth <= innerWidth));

@@ -37,7 +37,7 @@ The browser chooses fingerings by minimizing a cost across the phrase. Each play
 
 `studio/score.py` reads explicit directions into `sourceBow` and records simple bowed-string slurs as `sourceJoin` links to the preceding event. The browser keeps user overrides in `bowEdit`. `web/bowing.js` derives strokes on demand, alternating directions between attacks and starting down after rests. A tie continues the stroke. Each note created by splitting a duration retains the attack identity for join lookup. Scores saved before these fields existed get suggestions on opening.
 
-The workspace and print view use the same stroke plan and ABC decorations. `web/practice-card.js` places the current finger assignments on a semitone grid and groups the selected bar by stroke. PDF options travel with the export snapshot. Playback uses the stroke groups for visual highlighting and retains the synthesized pitch demonstration.
+The workspace and print view use the same stroke plan and centered bow labels. `web/practice-card.js` places the current finger assignments on a semitone grid and groups the selected bar by stroke. `web/violin.js` renders both hands from the same event, fingering and stroke on screen and in print. The nut and bridge anchor the active string and first-position marker. PDF options travel with the export snapshot, including the practice card’s preview note. Playback uses the stroke groups for visual highlighting and retains the synthesized pitch demonstration.
 
 ## Persistence and lifecycle
 

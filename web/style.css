@@ -573,3 +573,20 @@ button:focus-visible,
 .inspector-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 #closeTools { font-size: 13px; padding: 5px 8px; }
 #closeTools kbd { color: var(--muted); font-size: 11px; }
+
+.hands-guide { margin: 0; display: grid; grid-template-columns: minmax(100px, 175px) 1fr; align-items: center; gap: 18px; }
+.hands-guide svg { width: 100%; height: auto; }
+.hands-guide .active-wire { stroke: #267750; stroke-width: 2.8; }
+.hands-guide figcaption { display: grid; gap: 12px; line-height: 1.35; }
+.hands-guide b, .hands-guide span { display: block; }
+.hands-guide b { color: var(--green); font-size: .9em; margin-bottom: 3px; }
+.hands-note { font: 600 1.35em var(--serif); }
+.card-hands { border-block: 1px solid var(--line); padding: 8px 0; }
+#noteHands .hands-guide { grid-template-columns: 76px 1fr; gap: 6px; font-size: 13px; margin: 10px 0; }
+#noteHands figcaption { gap: 8px; }
+.bow-group [data-preview-note] { border-radius: 4px; padding: 3px 5px; font-size: inherit; font-weight: 500; }
+.bow-group [aria-pressed="true"] { border-color: var(--green); background: #e2eddd; }
+@media (max-width: 520px) { .card-hands .hands-guide { grid-template-columns: 118px 1fr; gap: 10px; } }
+@media print { .card-hands .hands-guide { grid-template-columns: 128px 1fr; } .hands-guide { break-inside: avoid; } }
+
+.fingerboard td .current-finger { color: white; background: var(--green); outline: 2px solid var(--green); outline-offset: 2px; }

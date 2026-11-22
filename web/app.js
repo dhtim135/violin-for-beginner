@@ -1,5 +1,6 @@
+import { renderHands } from "./violin.js";
 import { bowPlan } from "./bowing.js";
-import { renderCard } from "./practice-card.js";
+import { renderCard, updateCardNote } from "./practice-card.js";
 import { songTitle } from "./title.js";
 import { keyOptions, keyLabel, intervalFor, shiftedKey } from "./keys.js";
 import {
@@ -67,6 +68,8 @@ let score,
   playbackRequest = 0,
   lastLit,
   bows = new Map(),
+  noteLocations = new Map(),
+  previewId,
   litStroke = [],
   dialogVersion = 0;
 function setPlaybackState(state) {
@@ -96,6 +99,7 @@ function lightNote(id) {
   }
   lastLit = nodes.get(id);
   lastLit?.classList.add("playing");
+  if (id && $("practice").open) previewNote(id);
 }
 function drawStaff() {
   const playing = lastLit?.dataset.note;
@@ -109,7 +113,20 @@ function cardBar() {
   return Math.max(1, Math.min(score.bars.length, Math.trunc(+$("cardBar").value) || 1));
 }
 function drawCard() {
-  if ($("practice").open) renderCard($("cardContent"), score, bows, cardBar() - 1, $("fullScale").checked);
+  if (!$("practice").open) return;
+  renderCard($("cardContent"), score, bows, cardBar() - 1, $("fullScale").checked, previewId,
+    n => previewNote(n.id));
+}
+function previewNote(id) {
+  const location = noteLocations.get(id);
+  if (!location) return;
+  previewId = id;
+  if (location.bar !== cardBar()) {
+    $("cardBar").value = location.bar;
+    drawCard();
+    return;
+  }
+  if ($("practice").open) updateCardNote($("cardContent"), location.note, bows, score.key);
 }
 $("practice").ontoggle = drawCard;
 $("fullScale").onchange = drawCard;
@@ -135,6 +152,7 @@ function accept(data, id = null, rev = 0, initial = false) {
   dirty = !id && data.kind !== "example";
   history = [];
   selected = null;
+  previewId = null;
   spellRhythm(score);
   suggest(score);
   if (!initial) {
@@ -169,6 +187,9 @@ function draw() {
   );
   $("first").value = Math.min(+$("first").value, +$("last").value);
   bows = bowPlan(score);
+  noteLocations = new Map();
+  score.bars.forEach((bar, index) => bar.events.forEach(note =>
+    noteLocations.set(note.id, { note, bar: index + 1 })));
   $("bowGuide").hidden = !$("showBows").checked;
   $("cardBar").max = score.bars.length;
   $("cardBar").value = cardBar();
@@ -361,6 +382,7 @@ function changeKey(target) {
 }
 function select(id) {
   selected = id;
+  previewNote(id);
   inspector(true);
   showEditor();
 }
@@ -387,7 +409,8 @@ function fillFingers(pitch) {
 function showEditor() {
   for (const el of nodes.values()) el.classList.remove("selected");
   const n = current();
-  $("edit").hidden = !n;
+  $("edit").hidden = $("noteHands").hidden = !n;
+  if (n) renderHands($("noteHands"), n, bows.get(n.id), score.key);
   document
     .querySelectorAll(".strings span")
     .forEach((el) =>
@@ -591,7 +614,7 @@ async function transport(fromId = null) {
       (id) => {
         lightNote(id);
         if (
-          !$("pieces").open && lastLit &&
+          !$("pieces").open && !$("practice").open && lastLit &&
           (lastLit.getBoundingClientRect().bottom > innerHeight ||
             lastLit.getBoundingClientRect().top < 0)
         )
@@ -637,7 +660,7 @@ $("export").onclick = guard(async () => {
   message("Preparing PDF…");
   try {
     const title = score.title;
-    const r = await fetch("/api/pdf", json({ ...score, printOptions: { bows: $("showBows").checked, card: $("printCard").checked, bar: cardBar(), scale: $("fullScale").checked } }));
+    const r = await fetch("/api/pdf", json({ ...score, printOptions: { bows: $("showBows").checked, card: $("printCard").checked, bar: cardBar(), note: previewId, scale: $("fullScale").checked } }));
     if (!r.ok) throw Error((await r.json()).detail);
     const url = URL.createObjectURL(await r.blob()),
       a = elem("a");

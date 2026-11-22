@@ -48,11 +48,13 @@ Click **Key** beside **Speed**, then click a named key in the panel to play in a
 
 ## Bowing and the practice card
 
-Open **Switch piece → Twinkle, Twinkle, Little Star 小星星**, then turn on **Show bowing**. The square-topped mark means down bow (下弓, frog to tip). The V means up bow (上弓, tip to frog). Finger arrows below the staff still mean low or high placement. During playback, green follows the current note and ochre marks the other notes in the same stroke.
+Open **Switch piece → Twinkle, Twinkle, Little Star 小星星**, with **Show bowing** enabled by default. The square-topped mark means down bow (下弓, frog to tip). The V means up bow (上弓, tip to frog). A hooked arrow (↳) means continue the same stroke through that note. Finger arrows below the staff still mean low or high placement. During playback, green follows the current note and ochre marks the other notes in the same stroke.
+
+Select a note to see both hands on a whole violin. A green marker identifies where to place your finger, an open circle marks an open string, and the arrow beside the bow shows the direction of travel. Press **Esc** or **Close** to return to the selected note.
 
 Select a note to see whether its bow comes from source notation, a suggestion or your edit. Choose **One bow with next note** to slur the two notes together. Choose **Separate bow** on the second note to split the stroke, or **Use source or suggestion** to clear that note's override. A tie holds the same pitch through its written durations. Save the score to keep bow edits.
 
-Open **Practice card · 指法与弓法** above the staff. The four-string diagram shows the fingerings used in this arrangement. **Include full scale** adds a one-octave warm-up in the current key (natural minor for a minor key). Choose **Preview bar** for the right-hand diagram. **Include practice card in PDF** appends the current card to the score. **Show bowing** controls whether marks appear on the printed staff.
+Open **Practice card · 指法与弓法** above the staff. The four-string diagram shows the fingerings used in this arrangement. **Include full scale** adds a one-octave warm-up in the current key (natural minor for a minor key). Choose **Preview bar**, then click a note in a bow group to see it on the violin. The card follows the sounding note during playback and prints the current preview. **Include practice card in PDF** appends the current card to the score. **Show bowing** controls whether marks appear on the printed staff.
 
 ## Read and correct a draft
 
