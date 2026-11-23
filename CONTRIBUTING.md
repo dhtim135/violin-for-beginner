@@ -29,6 +29,8 @@ Review the actual contents even when hashes and metadata match. The checker does
 
 Use the same app for public development and personal practice. Keep personal scores in the local data directory, and store backups outside the checkout. A contributor can reproduce a bug with an original short phrase or a bundled piece. This also applies to material visible in screenshots, screen recordings, test fixtures and exported PDFs. [Practice library and backup instructions](INSTRUCTIONS.md#personal-practice-library)
 
+Open a pull request for every change to `main`, including maintainer changes. The GitHub ruleset blocks direct pushes, force pushes and branch deletion. Before merge, the branch must be up to date, review conversations resolved, and the GitHub Actions **Music rights review** check successful. The ruleset allows a solo maintainer to merge their own passing PR. [Live branch rules](https://github.com/dhtim135/violin-for-beginner/rules/27922647)
+
 Use these checks when merging changes or publishing a release.
 
 1. Review all incoming commits, including files added and deleted within the branch. From a topic branch, `git log --name-status origin/main..HEAD` lists affected paths commit by commit. Inspect changes that contain note sequences, recordings, archives, screenshots or download links. If a local-only edition entered a commit, remove it from the branch history before publishing.
