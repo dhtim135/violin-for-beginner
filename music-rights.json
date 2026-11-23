@@ -1,0 +1,249 @@
+{
+  "works": {
+    "starter": {
+      "title": "Twinkle, Twinkle, Little Star",
+      "credit": "Traditional melody; Stringbook arrangement",
+      "composition": {
+        "basis": "public-domain",
+        "evidence": "https://imslp.org/wiki/Ah%21_vous_diraije%2C_Maman_%28Mozart%2C_Wolfgang_Amadeus%29",
+        "reason": "The melody predates Mozart’s eighteenth-century variations. This project uses the traditional tune."
+      },
+      "edition": {
+        "basis": "original",
+        "evidence": "repo:studio/score.py",
+        "reason": "Hand-entered single-line Stringbook setting; project contributions use PolyForm Noncommercial 1.0.0."
+      }
+    },
+    "frere-jacques": {
+      "title": "Frère Jacques",
+      "credit": "Traditional French round; Stringbook arrangement",
+      "composition": {
+        "basis": "public-domain",
+        "evidence": "https://imslp.org/wiki/Fr%C3%A8re_Jacques_(Rameau,_Jean-Philippe)",
+        "reason": "Historical French round dating to the eighteenth century. The app sets the traditional melody."
+      },
+      "edition": {
+        "basis": "original",
+        "evidence": "repo:studio/starters.py",
+        "reason": "Hand-entered single-line Stringbook setting; project contributions use PolyForm Noncommercial 1.0.0."
+      }
+    },
+    "row-your-boat": {
+      "title": "Row, Row, Row Your Boat",
+      "credit": "Traditional round; Stringbook arrangement",
+      "composition": {
+        "basis": "public-domain",
+        "evidence": "https://www.themorgan.org/music-manuscripts-and-printed-music/311191",
+        "reason": "The common melody appears on page 69 of the 1881 Franklin Square Song Collection."
+      },
+      "edition": {
+        "basis": "original",
+        "evidence": "repo:studio/starters.py",
+        "reason": "Hand-entered single-line Stringbook setting; project contributions use PolyForm Noncommercial 1.0.0."
+      }
+    },
+    "jingle-bells": {
+      "title": "Jingle Bells",
+      "credit": "James Lord Pierpont; Stringbook refrain",
+      "composition": {
+        "basis": "public-domain",
+        "evidence": "https://www.loc.gov/item/2023812429/",
+        "reason": "The refrain comes from the 1857 publication of The One Horse Open Sleigh."
+      },
+      "edition": {
+        "basis": "original",
+        "evidence": "repo:studio/starters.py",
+        "reason": "Hand-entered single-line Stringbook setting; project contributions use PolyForm Noncommercial 1.0.0."
+      }
+    },
+    "baa-baa-black-sheep": {
+      "title": "Baa, Baa, Black Sheep",
+      "credit": "Traditional; Walter Crane edition, music transcribed by Linda Cantoni; Stringbook upper-staff adaptation",
+      "composition": {
+        "basis": "public-domain",
+        "evidence": "https://www.gutenberg.org/ebooks/25418",
+        "reason": "The Baby’s Opera collects this traditional tune. Project Gutenberg lists the edition as public domain in the USA."
+      },
+      "edition": {
+        "basis": "public-domain",
+        "evidence": "repo:assets/babys-opera-NOTICE.txt",
+        "reason": "XML from the credited Project Gutenberg edition, adapted for violin. Preserve the accompanying Gutenberg terms and check applicable territorial status."
+      }
+    },
+    "mulberry-bush": {
+      "title": "Here We Go Round the Mulberry Bush",
+      "credit": "Traditional; Walter Crane edition, music transcribed by Linda Cantoni; Stringbook upper-staff adaptation",
+      "composition": {
+        "basis": "public-domain",
+        "evidence": "https://www.gutenberg.org/ebooks/25418",
+        "reason": "The Baby’s Opera collects this traditional tune. Project Gutenberg lists the edition as public domain in the USA."
+      },
+      "edition": {
+        "basis": "public-domain",
+        "evidence": "repo:assets/babys-opera-NOTICE.txt",
+        "reason": "XML from the credited Project Gutenberg edition, adapted for violin. Preserve the accompanying Gutenberg terms and check applicable territorial status."
+      }
+    },
+    "hush-a-by-baby": {
+      "title": "Hush-a-by Baby",
+      "credit": "Traditional; Walter Crane edition, music transcribed by Linda Cantoni; Stringbook upper-staff adaptation",
+      "composition": {
+        "basis": "public-domain",
+        "evidence": "https://www.gutenberg.org/ebooks/25418",
+        "reason": "The Baby’s Opera collects this traditional tune. Project Gutenberg lists the edition as public domain in the USA."
+      },
+      "edition": {
+        "basis": "public-domain",
+        "evidence": "repo:assets/babys-opera-NOTICE.txt",
+        "reason": "XML from the credited Project Gutenberg edition, adapted for violin. Preserve the accompanying Gutenberg terms and check applicable territorial status."
+      }
+    },
+    "notation-fixtures": {
+      "title": "Notation and four-string exercises",
+      "credit": "Stringbook contributors",
+      "composition": {
+        "basis": "original",
+        "evidence": "repo:experiments/m0/fixtures.py",
+        "reason": "Original project-authored notation and test phrases released under the project license."
+      },
+      "edition": {
+        "basis": "original",
+        "evidence": "repo:experiments/m0/fixtures.py",
+        "reason": "Original project-authored notation and test phrases released under the project license."
+      }
+    },
+    "audio-fixture": {
+      "title": "Eight-note audio exercise",
+      "credit": "Stringbook contributors",
+      "composition": {
+        "basis": "original",
+        "evidence": "repo:samples/generate_melody.py",
+        "reason": "Original eight-note Stringbook exercise generated by the credited source under the project license."
+      },
+      "edition": {
+        "basis": "original",
+        "evidence": "repo:samples/generate_melody.py",
+        "reason": "Original eight-note Stringbook exercise generated by the credited source under the project license."
+      },
+      "recording": {
+        "basis": "original",
+        "evidence": "repo:samples/generate_melody.py",
+        "reason": "Synthesized by the original generator. There are no third-party performance or recording samples."
+      }
+    },
+    "openscore-index": {
+      "title": "OpenScore Lieder edition index",
+      "credit": "OpenScore Lieder contributors",
+      "composition": {
+        "basis": "CC0-1.0",
+        "evidence": "https://github.com/OpenScore/Lieder/tree/38c5db510224d9facdc4b08d741fc788cfb58ea8",
+        "reason": "The tracked file indexes paths only. Upstream releases its score transcriptions under CC0."
+      },
+      "edition": {
+        "basis": "CC0-1.0",
+        "evidence": "https://github.com/OpenScore/Lieder/tree/38c5db510224d9facdc4b08d741fc788cfb58ea8",
+        "reason": "The tracked file indexes paths only. Upstream releases its score transcriptions under CC0."
+      }
+    }
+  },
+  "files": {
+    "assets/babys-opera-NOTICE.txt": {
+      "blob": "49cf525b48851772fdca998ebe3362789d0ceb51",
+      "works": [
+        "baa-baa-black-sheep",
+        "mulberry-bush",
+        "hush-a-by-baby"
+      ]
+    },
+    "assets/babys-opera.zip": {
+      "blob": "87a990199755487a28ff19431be346615fbe9d71",
+      "works": [
+        "baa-baa-black-sheep",
+        "mulberry-bush",
+        "hush-a-by-baby"
+      ]
+    },
+    "assets/openscore.json": {
+      "blob": "c6374f13bc95a20a6c09d32371c283d2c7680c32",
+      "works": [
+        "openscore-index"
+      ]
+    },
+    "docs/media/annotated-score.png": {
+      "blob": "50b0d7766f1e03f7df33a4189fc18b202534d7f1",
+      "works": [
+        "starter"
+      ]
+    },
+    "docs/media/notes-and-bowing.gif": {
+      "blob": "2ed8bdf7d3fdf64a436cb48d3c15c8e954c21079",
+      "works": [
+        "starter"
+      ]
+    },
+    "docs/media/twinkle-practice-score.pdf": {
+      "blob": "8e11c069e21ff4e4cfde266b19ec494107d27f72",
+      "works": [
+        "starter"
+      ]
+    },
+    "experiments/m0/fixtures.py": {
+      "blob": "6f130f43d5af826653e9dec23bd3894cd2e43aff",
+      "works": [
+        "notation-fixtures"
+      ]
+    },
+    "output/pdf/four-string-example.pdf": {
+      "blob": "90939320734914d6d4bbbcb2650a4cca5887d4e5",
+      "works": [
+        "notation-fixtures"
+      ]
+    },
+    "samples/generate_melody.py": {
+      "blob": "32fc6bc9ba0d607b131c7c6eae325618822f29e7",
+      "works": [
+        "audio-fixture"
+      ]
+    },
+    "samples/melody.wav": {
+      "blob": "123a250edd519b937e65c9bbef31a05d751fd9de",
+      "works": [
+        "audio-fixture"
+      ]
+    },
+    "samples/placement.pdf": {
+      "blob": "3d9e6d02162a9361e32123c1d4b8e622848ad5dd",
+      "works": [
+        "notation-fixtures"
+      ]
+    },
+    "samples/rhythm.png": {
+      "blob": "7aa93a87f6ca26a911af29dd9d959d291096d277",
+      "works": [
+        "notation-fixtures"
+      ]
+    },
+    "studio/nursery.py": {
+      "blob": "534266658b659b4eac05edfc6dac9ccec939e99c",
+      "works": [
+        "baa-baa-black-sheep",
+        "mulberry-bush",
+        "hush-a-by-baby"
+      ]
+    },
+    "studio/score.py": {
+      "blob": "d071acb3f72247348089e252faee318dcef4b90c",
+      "works": [
+        "starter"
+      ]
+    },
+    "studio/starters.py": {
+      "blob": "a960698caa78c486c5f7d77f5ddc74fbdac766aa",
+      "works": [
+        "frere-jacques",
+        "row-your-boat",
+        "jingle-bells"
+      ]
+    }
+  }
+}

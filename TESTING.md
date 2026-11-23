@@ -22,6 +22,10 @@ The default `npm test` command runs the Python catalogue checks with a new, empt
 
 The bowing checks cover source up-bows, violin versus piano slurs in MusicXML, tied durations, rests, group edits and scale spelling. The browser joins two notes in *Twinkle, Twinkle, Little Star*, changes and saves a bow direction, reopens the edition, checks playback highlighting and transposition, and inspects the PDF card and mobile viewport. It also checks continuation labels, matching labels on the enlarged violin and fingerboard, open strings, note previews, the highlighted fingerboard position and Escape focus after staff reflow.
 
+## Public music rights check
+
+Run `python3 scripts/check_music_rights.py` to validate the committed tree, or add `--base origin/main --head HEAD` to include intermediate commits before pushing a branch. GitHub runs **Music rights review** on pull requests and pushes to `main`. The unit tests use invented fixtures for permitted, undocumented, private, stale and recording-specific cases. [How to supply and review evidence](CONTRIBUTING.md#music-rights-check)
+
 ## Quality measurements
 
 The M0 recognizer recovered all expected pitch/rest and duration pairs in 12 simple generated inputs. On three more complex voice-and-piano PDFs, the default recognized part matched 11/16, 26/38 and 4/30 expected events respectively. Part selection and source comparison matter. These results cover the measured excerpts. [M0 findings](experiments/m0/FINDINGS.md)
