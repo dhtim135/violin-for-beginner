@@ -14,6 +14,16 @@ Identify the composer, arranger or transcriber, exact edition and source URL. Gi
 
 Credit the source in the score and update the notices. Supply the English and Simplified Chinese titles, measure range, practice key and any simplification. For recordings, document the rights to the performance and recording too. Keep personal imports in the local library. [Public catalogue and credits](THIRD_PARTY_NOTICES.md)
 
+## Maintaining the public repository
+
+Use the same app for public development and personal practice. Keep personal scores in the local data directory, and store backups outside the checkout. A contributor can reproduce a bug with an original short phrase or a bundled piece. This also applies to material visible in screenshots, screen recordings, test fixtures and exported PDFs. [Practice library and backup instructions](INSTRUCTIONS.md#personal-practice-library)
+
+Use these checks when merging changes or publishing a release.
+
+1. Review all incoming commits, including files added and deleted within the branch. From a topic branch, `git log --name-status origin/main..HEAD` lists affected paths commit by commit. Inspect changes that contain note sequences, recordings, archives, screenshots or download links. If a local-only edition entered a commit, remove it from the branch history before publishing.
+2. For each new public edition, check the source, reuse terms and credits described above. Link the evidence in the pull request and the third-party notices. Apply the same review to new dependencies and their upstream licenses.
+3. Run `npm test`. It checks the public catalogue and exercises the private-library loader with a project-authored fixture. Capture public demos from a preview with an empty data directory. Build release archives from the reviewed Git tag so local files stay on your machine.
+
 ## Code and other original contributions
 
 By submitting original code or other project-authored material for inclusion, you agree to license your contribution under the project's PolyForm Noncommercial License 1.0.0. Contributors retain their copyright. Identify third-party materials separately and preserve their upstream terms. [Project license](LICENSE)

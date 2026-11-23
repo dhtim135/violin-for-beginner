@@ -67,6 +67,43 @@ Open **Practice card · 指法与弓法** above the staff. The four-string diagr
 - **Range?** means the suggested pitch falls outside the app's first-position map. Edit the note, or use the transposition option under **Score & source** when a shift improves playability. The button states the shift and how many notes would still be outside range. Transposition recalculates fingerings and records the change in the PDF.
 - **Download PDF** includes the current edits, legend and source information. Save separately to reopen those edits later.
 
+## Personal practice library
+
+Git tracks the app and the bundled songs. For practice, import material you have permission to use and choose **Save score**. The default library is `.data/`. It holds your saved scores, original uploads and optional `private-editions.json` catalogue. Keep locally exported PDFs and any source files you want to retain in a personal folder outside the checkout. A Git clone restores only the public files.
+
+**Back up before replacing a checkout.** Save any edits in the browser, wait for imports to finish, then stop the server. On macOS, run the following from the repository root. It copies the entire active library to a new directory outside Git and prints the backup path.
+
+```sh
+(
+  set -eu
+  umask 077
+  backup_root="$HOME/Library/Application Support/Stringbook/Backups"
+  mkdir -p "$backup_root"
+  snapshot=$(mktemp -d "$backup_root/library-XXXXXXXX")
+  cp -Rp "${VIOLIN_DATA:-.data}/." "$snapshot/"
+  chmod 700 "$snapshot"
+  echo "$snapshot"
+)
+```
+
+**Restore or switch checkouts.** Copy a snapshot to a new practice directory outside Git. Point the new checkout at that copy to keep the backup available for recovery. Substitute the path printed above for `/path/to/snapshot`.
+
+```sh
+(
+  set -eu
+  umask 077
+  practice_root="$HOME/Library/Application Support/Stringbook"
+  mkdir -p "$practice_root"
+  practice_dir=$(mktemp -d "$practice_root/practice-XXXXXXXX")
+  cp -Rp "/path/to/snapshot/." "$practice_dir/"
+  chmod 700 "$practice_dir"
+  echo "Practice library: $practice_dir"
+  VIOLIN_DATA="$practice_dir" ./scripts/start.sh
+)
+```
+
+For future sessions, reuse that same practice directory with `VIOLIN_DATA="/path/to/practice-directory" ./scripts/start.sh`. Check **Switch piece** for private editions and **My scores** for saved edits. When taking public screenshots, launch a separate preview with `VIOLIN_DATA="$(mktemp -d)" PORT=8428 ./scripts/start.sh` and open **http://127.0.0.1:8428**.
+
 ## Files and recovery
 
 The library database, revision snapshots, uploaded originals, generated clips and recognition logs live under `.data/`. Back up the entire directory with the server stopped. Set `VIOLIN_DATA` to use a different location. Closing the browser leaves saved scores on this machine. Unsaved edits are held in the tab.

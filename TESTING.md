@@ -16,13 +16,9 @@ The suite needs local Chrome (or CHROME_BIN), Audiveris, FFmpeg, the pinned Pyth
 | Visual inspection | Desktop workspace and rendered second page of a multi-page catalogue export | Staffs, notes and compact low/high finger labels remain together. Each system has its bar range. The print background is white. |
 | Setup | `./scripts/setup.sh` on the prepared Apple Silicon machine | Dependency installation and prerequisite checks passed. The Audiveris binary was previously extracted from the pinned arm64 disk image and exercised by real conversions. |
 
-The browser suite generates its own 24-bar study in the temporary local library. It measures gaps, baselines and notehead alignment across all 216 finger labels at 390 px and 1300 px. It checks the grouped picker order with the app module blocked, and checks bilingual titles in the picker, a saved score and a PDF. The model suite verifies the public catalogue independently of any private collection.
+The browser suite generates its own 24-bar study in the temporary local library. It measures gaps, baselines and notehead alignment across all 216 finger labels at 390 px and 1300 px. It checks the grouped picker order with the app module blocked, and checks bilingual titles in the picker, a saved score and a PDF. The browser fixture exercises the optional local-edition loader with an original study.
 
-The public catalogue test checks the seven bundled titles. A separate check reads all offline editions visible to the current installation and expects full measures, matching bilingual titles and first-position pitches. Personal editions can legitimately start with a partial measure (a pickup), which that full-measure check flags. Running the suite with an empty data directory reproduces the README’s public-build checks even on a machine with personal editions.
-
-```sh
-VIOLIN_DATA="$(mktemp -d)" npm test
-```
+The default `npm test` command runs the Python catalogue checks with a new, empty `VIOLIN_DATA` directory, even when your shell points at a personal library. It verifies the seven bundled titles, bilingual labels, full measures and first-position range. The temporary directory is removed on exit. To check your own library, open it separately with the normal start command. [Private practice and backups](INSTRUCTIONS.md#personal-practice-library)
 
 The bowing checks cover source up-bows, violin versus piano slurs in MusicXML, tied durations, rests, group edits and scale spelling. The browser joins two notes in *Twinkle, Twinkle, Little Star*, changes and saves a bow direction, reopens the edition, checks playback highlighting and transposition, and inspects the PDF card and mobile viewport. It also checks continuation labels, matching labels on the enlarged violin and fingerboard, open strings, note previews, the highlighted fingerboard position and Escape focus after staff reflow.
 

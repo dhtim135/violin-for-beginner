@@ -1,6 +1,8 @@
 .venv/
 .runtime/
 .data/
+# Personal catalogue, even when copied elsewhere in this checkout.
+private-editions.json
 node_modules/
 __pycache__/
 .ruff_cache/
