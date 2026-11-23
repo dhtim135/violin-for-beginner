@@ -1,0 +1,38 @@
+name: Public repertoire
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  rights:
+    name: Music rights review
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check each incoming revision, including the merge result
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD: ${{ github.sha }}
+        run: |
+          set -eu
+          checker="$RUNNER_TEMP/music_rights.py"
+          # Apply the base branch policy even if a PR edits the checker.
+          # The audited baseline predates the first check and only bootstraps its installation.
+          if [ "$BASE" = 1308ec455f4bea0089ce15b75f85ed71b24ff7c6 ]; then
+            git show "$HEAD:scripts/check_music_rights.py" > "$checker"
+          else
+            git show "$BASE:scripts/check_music_rights.py" > "$checker"
+          fi
+          python3 -I "$checker" --base "$BASE" --head "$HEAD"
+          python3 -I scripts/check_music_rights.py --head "$HEAD"
+      - name: Exercise accepted and rejected fixture submissions
+        run: python3 -I -m unittest discover -s tests -p test_music_rights.py
