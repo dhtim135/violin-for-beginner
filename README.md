@@ -16,17 +16,17 @@ The first five notes of *Twinkle, Twinkle, Little Star* read **D · D · A · A 
 
 ## Included songs
 
-These seven beginner violin scores come with a fresh install and work offline. Open **Switch piece** to play one, or search by either name.
+These seven beginner violin scores come with a fresh install and work offline. Open **Switch piece** to play one, or search by title.
 
-| Song | Chinese title | Edition in Stringbook |
-| --- | --- | --- |
-| Baa, Baa, Black Sheep | 咩咩黑绵羊 | *The Baby’s Opera*, upper-staff melody |
-| Frère Jacques | 两只老虎 | Stringbook setting of the traditional round |
-| Here We Go Round the Mulberry Bush | 我们绕着桑树转 | *The Baby’s Opera*, upper-staff melody |
-| Hush-a-by Baby | 宝宝摇篮曲 | *The Baby’s Opera*, upper-staff melody |
-| Jingle Bells | 铃儿响叮当 | Stringbook setting of Pierpont’s refrain |
-| Row, Row, Row Your Boat | 划船歌 | Stringbook’s even-beat setting of the traditional round |
-| Twinkle, Twinkle, Little Star | 小星星 | Stringbook’s D-major setting of the traditional melody |
+| Song | Edition in Stringbook |
+| --- | --- |
+| Baa, Baa, Black Sheep | *The Baby’s Opera*, upper-staff melody |
+| Frère Jacques | Stringbook setting of the traditional round |
+| Here We Go Round the Mulberry Bush | *The Baby’s Opera*, upper-staff melody |
+| Hush-a-by Baby | *The Baby’s Opera*, upper-staff melody |
+| Jingle Bells | Stringbook setting of Pierpont’s refrain |
+| Row, Row, Row Your Boat | Stringbook’s even-beat setting of the traditional round |
+| Twinkle, Twinkle, Little Star | Stringbook’s D-major setting of the traditional melody |
 
 The three *Baby’s Opera* melodies are adapted from Linda Cantoni’s MusicXML transcriptions for the Project Gutenberg edition, listed as public domain in the United States. The other four are project arrangements of public-domain tunes. Personal imports stay in your local library. [Edition credits and reuse terms](THIRD_PARTY_NOTICES.md#music-in-the-public-catalogue)
 
@@ -38,7 +38,7 @@ The three *Baby’s Opera* melodies are adapted from Linda Cantoni’s MusicXML 
 | --- | --- | --- |
 | Score, fingering and bowing | Tested | Select a note, inspect both hands, edit a finger or bow, or transpose the piece. The practice card shows the fingerings used. |
 | Playback, saving and printing | Tested | Slow down, count in, start from a note or loop two bars. Save, reopen and print the edited score with its practice card. |
-| Title search | Tested | Search starters by English or Chinese title, or fetch a specific OpenScore Lieder edition. Try **小星星** offline or **Just for Today** online. |
+| Title search | Tested | Search starters by English or Chinese title, or fetch a specific OpenScore Lieder edition. Try **Twinkle, Twinkle, Little Star** offline or **Just for Today** online. |
 | Score photo or PDF recognition | Testing | Simple printed examples have been checked. Curved phone photos and multi-part pages can produce wrong notes or rhythms. Choose the melody part and compare it with the original. [Sample image](samples/rhythm.png) · [Sample PDF](samples/placement.pdf) |
 | Audio-to-score conversion | Testing | Start with a short solo recording. Check pitches and timing by ear, especially with accompaniment. [Four-second sample](samples/melody.wav) |
 
