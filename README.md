@@ -1,25 +1,62 @@
-# Stringbook
+# Stringbook · Violin fingering and bowing for beginners
 
-A local score assistant for beginner violinists. Import a photo, PDF or audio excerpt, or search a score by title. Read four-string finger labels alongside the staff, listen, correct the draft, save it and download a printable PDF.
+Know the tune but still have to stop and work out where your fingers go? Stringbook writes the **string and finger below each note** and the **bow direction above it**. Follow the staff for rhythm, hear the melody at your pace, then print the same markings for your music stand.
 
-**Try it:** run `./scripts/start.sh` on the prepared machine and open <http://127.0.0.1:8427>. See [INSTRUCTIONS.md](INSTRUCTIONS.md) for a fresh install and sample inputs.
+[Open a printable score and practice card (2-page PDF)](docs/media/twinkle-practice-score.pdf) · [See both hands in action](#see-both-hands-in-action) · [Run Stringbook](#run-stringbook)
 
-| Guide | Use it for |
+![Twinkle, Twinkle, Little Star in D major during playback. The highlighted note is marked A1 below the staff and down bow above it.](docs/media/annotated-score.png)
+
+The first five notes of *Twinkle, Twinkle, Little Star* read **D · D · A · A · A1**. Play the open D string twice, the open A string twice, then put your index finger on the A string. Later in the phrase, **D2↑** asks for a high second finger on the D string. The arrow below the staff describes finger placement.
+
+## See both hands in action
+
+Select a note to see its place on the violin and which way to move the bow. The practice card collects the fingerings used in that piece. You can include it as the last page of your PDF.
+
+<details>
+<summary>Watch 8 seconds of playback and note selection</summary>
+
+![The highlight follows the opening of Twinkle. Selecting A1 shows the first finger on the A string and a down bow. Selecting D2 high shows the higher second-finger placement on the D string and an up bow.](docs/media/notes-and-bowing.gif)
+
+</details>
+
+## Bring a tune
+
+| Start with | What to try |
 | --- | --- |
-| [PRODUCT.md](PRODUCT.md) | User journey, agreed P0 scope and acceptance criteria |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Score model, import pipelines, web client and local storage |
-| [MILESTONES.md](MILESTONES.md) | Delivered capabilities and priorities for feedback |
-| [TESTING.md](TESTING.md) | Running tests, measured quality and known limits |
-| [AGENTS.md](AGENTS.md) | Repository conventions and maintenance |
+| A photo or scan | Import a PNG or JPEG of sheet music and choose the part to play. [Sample score image](samples/rhythm.png) |
+| A PDF score | Select the pages and melody part. [Sample PDF](samples/placement.pdf) |
+| A song title | Search the seven offline starters by English or Chinese name, or find a specific edition in the OpenScore Lieder catalogue. Try **小星星** or **Die Forelle**. |
+| A recording | Turn a solo melody into a draft you can listen to and correct. [Four-second audio sample](samples/melody.wav) |
 
-## Use and contributions
+Compare a generated draft with the original before practicing. You can correct pitches, rhythm, fingering and bowing, transpose to another key, and save your edits. Imports and saved scores stay on your computer. Fetching an online score needs internet access.
 
-Stringbook is source-available under the PolyForm Noncommercial License 1.0.0. It covers the contributors’ original code, documentation, and project-authored exercises and arrangements to the extent contributors hold rights in them. You can use, modify and share them for personal study and other permitted purposes. Pass along the license or its official URL and the required notice below when you share a copy. [Full license](LICENSE)
+## Run Stringbook
 
-Required Notice: Copyright Stringbook contributors
+The setup script supports **macOS on Apple Silicon**. Install Node.js 24 with npm, uv, FFmpeg and Google Chrome first. [Prerequisite commands and setup details](INSTRUCTIONS.md#recreate-the-environment)
 
-The license expressly permits use by educational institutions regardless of their funding, including tuition. A commercial vendor selling the app or offering a paid hosted service needs separate written permission from the relevant copyright holders. The maintainers can route permission inquiries through the repository. [Permission inquiries](https://github.com/dhtim135/violin-for-beginner/issues)
+```sh
+git clone https://github.com/dhtim135/violin-for-beginner.git
+cd violin-for-beginner
+./scripts/setup.sh
+./scripts/start.sh
+```
 
-Third-party software, score editions and recordings have their own terms. The public catalogue includes seven offline pieces. Personal score imports stay in the user's local library. [Music and dependency notices](THIRD_PARTY_NOTICES.md)
+Open **[Stringbook on localhost](http://127.0.0.1:8427)**. *Twinkle* is ready to play. For a first practice loop, set **Speed** to **0.75×**, turn on **Loop bars**, choose bars **1–2**, and press **Play**. Click the first **A1** to see where your finger lands. **Esc** returns you to the score.
 
-Bug reports, fingering corrections and documented score sources are welcome. [Contribution guide](CONTRIBUTING.md)
+## Feedback and contributions
+
+Which note made you stop? If a fingering feels awkward, tell us the piece, bar, displayed label and what you would play instead. Reports from beginners and teachers are welcome. [Open an issue](https://github.com/dhtim135/violin-for-beginner/issues) · [Contribute code or a score](CONTRIBUTING.md)
+
+Star Stringbook if you’d like to find it again for your next practice session.
+
+For development, start with the [product scope](PRODUCT.md), [architecture](ARCHITECTURE.md), [milestones](MILESTONES.md), [testing guide](TESTING.md) and [repository conventions](AGENTS.md).
+
+## License and music credits
+
+Stringbook is **source-available** under PolyForm Noncommercial 1.0.0. The license covers contributors’ original code, documentation, exercises and arrangements to the extent they hold the rights. Personal study and use by educational institutions, including those charging tuition, are permitted. Selling the app or running a paid hosted service requires separate permission. [Full license](LICENSE) · [Permission inquiries](https://github.com/dhtim135/violin-for-beginner/issues)
+
+When sharing a copy, include the license or its official URL and the following notice.
+
+> Required Notice: Copyright Stringbook contributors
+
+Third-party software, score editions and recordings have their own terms. [Music and dependency credits](THIRD_PARTY_NOTICES.md)
