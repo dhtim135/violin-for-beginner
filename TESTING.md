@@ -18,7 +18,11 @@ The suite needs local Chrome (or CHROME_BIN), Audiveris, FFmpeg, the pinned Pyth
 
 The browser suite generates its own 24-bar study in the temporary local library. It measures gaps, baselines and notehead alignment across all 216 finger labels at 390 px and 1300 px. It checks the grouped picker order with the app module blocked, and checks bilingual titles in the picker, a saved score and a PDF. The model suite verifies the public catalogue independently of any private collection.
 
-The public catalogue test checks the seven retained titles. All offline editions are checked for matching bilingual titles, measure lengths and first-position range.
+The public catalogue test checks the seven bundled titles. A separate check reads all offline editions visible to the current installation and expects full measures, matching bilingual titles and first-position pitches. Personal editions can legitimately start with a partial measure (a pickup), which that full-measure check flags. Running the suite with an empty data directory reproduces the README’s public-build checks even on a machine with personal editions.
+
+```sh
+VIOLIN_DATA="$(mktemp -d)" npm test
+```
 
 The bowing checks cover source up-bows, violin versus piano slurs in MusicXML, tied durations, rests, group edits and scale spelling. The browser joins two notes in *Twinkle, Twinkle, Little Star*, changes and saves a bow direction, reopens the edition, checks playback highlighting and transposition, and inspects the PDF card and mobile viewport. It also checks continuation labels, matching labels on the enlarged violin and fingerboard, open strings, note previews, the highlighted fingerboard position and Escape focus after staff reflow.
 

@@ -2,33 +2,43 @@
 
 Know the tune but still have to stop and work out where your fingers go? Stringbook writes the **string and finger below each note** and the **bow direction above it**. Follow the staff for rhythm, hear the melody at your pace, then print the same markings for your music stand.
 
-[Open a printable score and practice card (2-page PDF)](docs/media/twinkle-practice-score.pdf) · [See both hands in action](#see-both-hands-in-action) · [Run Stringbook](#run-stringbook)
+[Printable score and practice card (2-page PDF)](docs/media/twinkle-practice-score.pdf) · [Included songs](#included-songs) · [Feature status](#feature-status) · [Run Stringbook](#run-stringbook)
 
-![Twinkle, Twinkle, Little Star in D major during playback. The highlighted note is marked A1 below the staff and down bow above it.](docs/media/annotated-score.png)
+![Ten-second demo of Twinkle, Twinkle, Little Star. The highlight moves over the staff, then the violin diagram shows where to place each finger and which way to bow.](docs/media/notes-and-bowing.gif)
 
-The first five notes of *Twinkle, Twinkle, Little Star* read **D · D · A · A · A1**. Play the open D string twice, the open A string twice, then put your index finger on the A string. Later in the phrase, **D2↑** asks for a high second finger on the D string. The arrow below the staff describes finger placement.
+[Open the full-size demo](docs/media/notes-and-bowing.gif) · [View a still screenshot](docs/media/annotated-score.png)
 
-## See both hands in action
+The first five notes of *Twinkle, Twinkle, Little Star* read **D · D · A · A · A1**. Play the open D string twice, the open A string twice, then put your index finger on the A string. Later, **D2↑** means a high second finger on the D string. Select that note to see the finger position and bow direction on the violin.
 
-Select a note to see its place on the violin and which way to move the bow. The practice card collects the fingerings used in that piece. You can include it as the last page of your PDF.
+## Included songs
 
-<details>
-<summary>Watch 8 seconds of playback and note selection</summary>
+These seven beginner violin scores come with a fresh install and work offline. Open **Switch piece** to play one, or search by either name.
 
-![The highlight follows the opening of Twinkle. Selecting A1 shows the first finger on the A string and a down bow. Selecting D2 high shows the higher second-finger placement on the D string and an up bow.](docs/media/notes-and-bowing.gif)
+| Song | 中文名 | Edition in Stringbook |
+| --- | --- | --- |
+| Baa, Baa, Black Sheep | 咩咩黑绵羊 | *The Baby’s Opera*, upper-staff melody |
+| Frère Jacques | 两只老虎 | Stringbook setting of the traditional round |
+| Here We Go Round the Mulberry Bush | 我们绕着桑树转 | *The Baby’s Opera*, upper-staff melody |
+| Hush-a-by Baby | 宝宝摇篮曲 | *The Baby’s Opera*, upper-staff melody |
+| Jingle Bells | 铃儿响叮当 | Stringbook setting of Pierpont’s refrain |
+| Row, Row, Row Your Boat | 划船歌 | Stringbook’s even-beat setting of the traditional round |
+| Twinkle, Twinkle, Little Star | 小星星 | Stringbook’s D-major setting of the traditional melody |
 
-</details>
+The three *Baby’s Opera* melodies are adapted from Linda Cantoni’s MusicXML transcriptions for the Project Gutenberg edition, listed as public domain in the United States. The other four are project arrangements of public-domain tunes. Personal imports stay in your local library. [Edition credits and reuse terms](THIRD_PARTY_NOTICES.md#music-in-the-public-catalogue)
 
-## Bring a tune
+## Feature status
 
-| Start with | What to try |
-| --- | --- |
-| A photo or scan | Import a PNG or JPEG of sheet music and choose the part to play. [Sample score image](samples/rhythm.png) |
-| A PDF score | Select the pages and melody part. [Sample PDF](samples/placement.pdf) |
-| A song title | Search the seven offline starters by English or Chinese name, or find a specific edition in the OpenScore Lieder catalogue. Try **小星星** or **Die Forelle**. |
-| A recording | Turn a solo melody into a draft you can listen to and correct. [Four-second audio sample](samples/melody.wav) |
+**Tested** means the named workflow has been exercised on the supported Apple Silicon Mac. **Testing** means you can try it now, but the musical result still needs checking against the source.
 
-Compare a generated draft with the original before practicing. You can correct pitches, rhythm, fingering and bowing, transpose to another key, and save your edits. Imports and saved scores stay on your computer. Fetching an online score needs internet access.
+| Feature | Status | What you can try |
+| --- | --- | --- |
+| Score, fingering and bowing | Tested | Select a note, inspect both hands, edit a finger or bow, or transpose the piece. The practice card shows the fingerings used. |
+| Playback, saving and printing | Tested | Slow down, count in, start from a note or loop two bars. Save, reopen and print the edited score with its practice card. |
+| Title search | Tested | Search starters by English or Chinese title, or fetch a specific OpenScore Lieder edition. Try **小星星** offline or **Just for Today** online. |
+| Score photo or PDF recognition | Testing | Simple printed examples have been checked. Curved phone photos and multi-part pages can produce wrong notes or rhythms. Choose the melody part and compare it with the original. [Sample image](samples/rhythm.png) · [Sample PDF](samples/placement.pdf) |
+| Audio-to-score conversion | Testing | Start with a short solo recording. Check pitches and timing by ear, especially with accompaniment. [Four-second sample](samples/melody.wav) |
+
+The import tests exercise file selection through export. Recognition quality was measured separately on a limited set of scores and recordings. Beginner feedback on which suggested fingerings and bowings feel comfortable is still pending. [Test coverage and measured results](TESTING.md)
 
 ## Run Stringbook
 
